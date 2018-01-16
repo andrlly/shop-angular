@@ -27,17 +27,21 @@ export class CategoriesComponent implements OnInit {
     this.catFrom = new FormGroup({
         name: new FormControl('', [Validators.required])
     });
+
   }
 
   updateCategory(id) {
-    const body = this.catFrom.value;
-    console.log(body);
-    this.categoriesService.updateCategory(id, body)
-        .subscribe((data) => {
-            console.log(data);
-        })
+    this.submitCatFrom(id);
   }
 
+  submitCatFrom(id) {
+    const body = this.catFrom.value;
+    this.categoriesService.updateCategory(id, body)
+        .subscribe((data) => {
+          console.log(data);
+          this.categories.isEdit = false;
+        })
+  }
 
   onDeleteCategory(id) {
     this.categoriesService.deleteCategory(id)

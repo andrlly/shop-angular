@@ -16,13 +16,10 @@
       <td>
         <form [formGroup]="catFrom" (ngSubmit)="submitCatFrom()">
           <span *ngIf="!category.isEdit">{{ category.name }}</span>
-          <textarea *ngIf="category.isEdit" name="name">{{ category.name }}</textarea>
+          <textarea *ngIf="category.isEdit" name="name" formControlName="name">{{ category.name }}</textarea>
         </form>
       </td>
       <td>
-        <!--<button type="button" class="btn btn-default" [ngClass]="{'alert-success': category.isEdit}" aria-label="Left Align" (click)="category.isEdit = !category.isEdit">-->
-          <!--<span class="glyphicon glyphicon-pencil" [ngClass]="{'glyphicon-ok': category.isEdit}" aria-hidden="true"></span>-->
-        <!--</button>-->
 
         <div *ngIf="!category.isEdit">
           <button type="button" class="btn btn-default alert-info" aria-label="Left Align" (click)="category.isEdit = !category.isEdit">
