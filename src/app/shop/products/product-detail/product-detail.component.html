@@ -1,0 +1,15 @@
+<nav aria-label="...">
+  <ul class="pager">
+    <li class="previous"><a [routerLink]="['/products']"><span aria-hidden="true">&larr;</span> All Products</a></li>
+  </ul>
+</nav>
+<div class="page-header">
+  <h1>{{ name }} <small>ID: {{ id }}</small></h1>
+  <h3><small>Count: {{ count }}</small></h3>
+  <h3><small>Category: {{ category_id }}</small></h3>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body">
+    {{ description }}
+  </div>
+</div>

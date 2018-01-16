@@ -8,9 +8,9 @@ import { ShopModule } from './shop/shop.module';
 import { AdminModule } from './admin/admin.module';
 import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
 import { ApiService } from "./shared/services/api.service";
-import { AuthService } from "./shared/services/auth.service";
-import { UsersService } from "./shared/services/users.service";
-import { AuthGuard } from "./shared/services/auth.guard";
+import { AuthGuard } from "./admin/auth/auth.guard";
+import { ProductsService } from "./shared/services/products.service";
+import { CategoriesService } from "./shared/services/categories.service";
 
 
 const routes: Routes = [
@@ -29,7 +29,7 @@ const routes: Routes = [
     AdminModule,
     RouterModule.forRoot(routes),
   ],
-  providers: [ApiService, AuthService, UsersService, AuthGuard],
+  providers: [ApiService, AuthGuard, ProductsService, CategoriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 
-import { User } from "../models/user.model";
-import { ApiService } from "./api.service";
+import { ApiService } from "../../shared/services/api.service";
+import { User } from "../../shared/models/user.model";
 
 @Injectable()
 export class AuthService {

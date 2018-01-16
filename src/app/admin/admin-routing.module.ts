@@ -5,12 +5,17 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrdersComponent } from './orders/orders.component';
 import { AuthComponent } from "./auth/auth.component";
-import { AuthGuard } from "../shared/services/auth.guard";
+import { ProductsComponent } from "./products/products.component";
+import { ProductDetailComponent } from "./products/product-detail/product-detail.component";
+import { CategoriesComponent } from "./categories/categories.component";
 
 const routes: Routes = [
   { path: 'admin', pathMatch: 'full', redirectTo: 'admin/dashboard' },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
+  { path: 'admin', component: AdminComponent, children: [
     { path: 'dashboard', component: DashboardComponent },
+    { path: 'categories', component: CategoriesComponent },
+    { path: 'products', component: ProductsComponent },
+    { path: 'products/:id', component: ProductDetailComponent},
     { path: 'orders', component: OrdersComponent },
   ]},
   { path: 'login', component: AuthComponent },

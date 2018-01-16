@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
-import { AuthService } from "../../shared/services/auth.service";
-import { UsersService } from "../../shared/services/users.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AuthService } from "./auth.service";
 
 @Component({
   selector: 'app-auth',
@@ -18,7 +17,6 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private userService: UsersService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -50,8 +48,6 @@ export class AuthComponent implements OnInit {
             } else {
                 console.log('Something went wrong!');
             }
-
-
           });
 
 

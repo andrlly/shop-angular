@@ -1,0 +1,36 @@
+<div class="title-block">
+  <h3 class="title">
+    <a [routerLink]="['/admin/products']"><i class="glyphicon glyphicon-chevron-left"></i></a>
+    Edit {{ id }}
+    <span class="sparkline bar"></span>
+  </h3>
+</div>
+<hr>
+<form [formGroup]="epForm" (ngSubmit)="editProductSubmit()">
+  <div class="form-group">
+    <label for="name">Product Name</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="Name" formControlName="name" [value]="name">
+    <p class="alert-danger" *ngIf="epForm.get('name').invalid && epForm.get('name').touched ">Name is empty!</p>
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" name="description" formControlName="description" [value]="description" rows="3"></textarea>
+    <p class="alert-danger" *ngIf="epForm.get('description').invalid && epForm.get('description').touched ">description is empty!</p>
+  </div>
+  <div class="form-group">
+    <label for="category_id">Category</label>
+    <select class="form-control" id="category_id" name="category_id">
+      <option>1</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <div class="form-group">
+      <label for="count">Count</label>
+      <input id="count" name="count" type="number" formControlName="count" min="1" [value]="count"/>
+    </div>
+    <p class="alert-danger" *ngIf="epForm.get('count').invalid && epForm.get('count').touched ">count is empty!</p>
+  </div>
+  <hr>
+  <button type="submit" class="btn btn-primary">Save</button>
+  <button type="submit" class="btn btn-danger" (click)="deleteProduct()">Delete</button>
+</form>

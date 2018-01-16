@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from "../../shared/services/products.service";
 import { Product } from "../../shared/models/product.model";
+import { ProductsService } from "../../shared/services/products.service";
 
 @Component({
   selector: 'app-products',
@@ -17,9 +17,7 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts()
         .subscribe((products: Product[]) => {
           this.products = products;
-        });
+        })
   }
-
-
 
 }

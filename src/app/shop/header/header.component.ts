@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import { AuthService } from "../../shared/services/auth.service";
+import { AuthService } from "../../admin/auth/auth.service";
+
+
 
 @Component({
   selector: 'app-header',
@@ -21,16 +23,16 @@ export class HeaderComponent implements OnInit {
     this.route.queryParams
         .subscribe((params: Params) => {
           if (params['accessDenied']) {
-            this.logButton = false;
-          } else {
             this.logButton = true;
+          } else {
+            this.logButton = false;
           }
         })
   }
 
   onLogout() {
     this.authService.logout();
-    // this.logButton = true;
+    this.logButton = false;
     this.router.navigate(['']);
   }
 

@@ -8,22 +8,22 @@
     <div class="form-group" *ngIf="authType !== 'login'">
       <label>User name</label>
       <input type="text" class="form-control" formControlName="name" placeholder="Enter username">
-      <p *ngIf="authForm.get('name').invalid && authForm.get('name').touched ">Name is empty!</p>
+      <p class="alert-danger" *ngIf="authForm.get('name').invalid && authForm.get('name').touched ">Name is empty!</p>
     </div>
-    <div class="form-group" [ngClass]="{'has-danger': authForm.get('email').invalid && authForm.get('email').touched}">
+    <div class="form-group" [ngClass]="{'has-error': authForm.get('email').invalid && authForm.get('email').touched}">
       <label>Email address</label>
       <input type="email" class="form-control" formControlName="email" placeholder="Enter email">
-      <p *ngIf="authForm.get('email').invalid && authForm.get('email').touched">Enter correct email!</p>
+      <p class="alert-danger" *ngIf="authForm.get('email').invalid && authForm.get('email').touched">Enter correct email!</p>
     </div>
-    <div class="form-group" [ngClass]="{'has-danger': authForm.get('password').invalid && authForm.get('password').touched}">
+    <div class="form-group" [ngClass]="{'has-error': authForm.get('password').invalid && authForm.get('password').touched}">
       <label>Password</label>
       <input type="password" class="form-control" formControlName="password" placeholder="Enter password">
-      <p *ngIf="authForm.get('password').invalid && authForm.get('password').touched ">Password is empty!</p>
+      <p class="alert-danger" *ngIf="authForm.get('password').invalid && authForm.get('password').touched ">Password is empty!</p>
     </div>
     <div class="form-group" *ngIf="authType !== 'login'">
       <label>Password</label>
       <input type="password" class="form-control" formControlName="password_confirmation" placeholder="Enter password">
-      <p *ngIf="authForm.get('password_confirmation').invalid && authForm.get('password_confirmation').touched ">Password is empty!</p>
+      <p class="alert-danger" *ngIf="authForm.get('password_confirmation').invalid && authForm.get('password_confirmation').touched ">Password is empty!</p>
     </div>
     <div class="text-right">
       <button type="submit" class="btn btn-primary" [disabled]="authForm.invalid">Sign in</button>

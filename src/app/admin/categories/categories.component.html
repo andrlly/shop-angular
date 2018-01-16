@@ -1,0 +1,45 @@
+<hr>
+<!--<app-add-product [products]="products"></app-add-product>-->
+<hr>
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">id</th>
+    <th scope="col">Name</th>
+    <th scope="col">Options</th>
+  </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let category of categories;">
+      <td>{{ category.id }}</td>
+      <td>
+        <form [formGroup]="catFrom" (ngSubmit)="submitCatFrom()">
+          <span *ngIf="!category.isEdit">{{ category.name }}</span>
+          <textarea *ngIf="category.isEdit" name="name">{{ category.name }}</textarea>
+        </form>
+      </td>
+      <td>
+        <!--<button type="button" class="btn btn-default" [ngClass]="{'alert-success': category.isEdit}" aria-label="Left Align" (click)="category.isEdit = !category.isEdit">-->
+          <!--<span class="glyphicon glyphicon-pencil" [ngClass]="{'glyphicon-ok': category.isEdit}" aria-hidden="true"></span>-->
+        <!--</button>-->
+
+        <div *ngIf="!category.isEdit">
+          <button type="button" class="btn btn-default alert-info" aria-label="Left Align" (click)="category.isEdit = !category.isEdit">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div *ngIf="category.isEdit">
+          <button type="button" class="btn btn-default alert-success" aria-label="Left Align" (click)="updateCategory(category.id)">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <button type="button" class="btn btn-default alert-danger" aria-label="Left Align" (click)="onDeleteCategory(category.id)">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

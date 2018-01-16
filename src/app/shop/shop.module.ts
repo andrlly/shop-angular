@@ -10,13 +10,15 @@ import { HomeService } from "./home/home.service";
 import { HttpClientModule } from "@angular/common/http";
 import { HttpModule } from "@angular/http";
 import { ApiService } from "../shared/services/api.service";
+import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     ShopComponent,
     ProductsComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProductDetailComponent
   ],
   imports: [
     CommonModule,
