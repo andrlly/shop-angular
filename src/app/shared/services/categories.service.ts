@@ -10,12 +10,19 @@ export class CategoriesService {
         private api: ApiService
     ) {}
 
-    getCategories(): Observable<Category> {
+    getCategories() {
         return this.api.get('categories');
     }
 
-    updateCategory(id, body): Observable<Category> {
-        return this.api.post(`categories/edit/${id}`, body)
+    addCategory(body): Observable<Category> {
+        return this.api.post(`categories/add`, body)
+            .map(data => {
+                return data;
+            })
+    }
+
+    updateCategory(id, name): Observable<Category> {
+        return this.api.post(`categories/edit/${id}`, {name})
             .map(data => {
                 return data;
             });

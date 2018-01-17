@@ -14,11 +14,14 @@ export class ProductsService {
     }
 
     getProductById(id: number): Observable<Product> {
-        return this.api.get(`products/${id}`);
+        return this.api.get(`products/${id}`)
+            .map(data => {
+                console.log(data);
+                return data;
+            });
     }
 
     addProduct(body): Observable<Product> {
-        console.log(body);
         return this.api.post(`product/add`, body)
             .map(data => {
                 return data;

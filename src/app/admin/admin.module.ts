@@ -9,11 +9,11 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AuthComponent } from "./auth/auth.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProductsComponent } from './products/products.component';
-import { ProductsService } from "../shared/services/products.service";
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { AuthService } from "./auth/auth.service";
 import { CategoriesComponent } from './categories/categories.component';
+import { CategoryEditorComponent } from './categories/category-editor/category-editor.component';
 
 @NgModule({
   imports: [
@@ -31,7 +31,8 @@ import { CategoriesComponent } from './categories/categories.component';
     ProductsComponent,
     ProductDetailComponent,
     AddProductComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    CategoryEditorComponent
   ],
   providers: [
     AuthService

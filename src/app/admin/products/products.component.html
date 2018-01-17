@@ -18,7 +18,8 @@
     <td>{{ product.name }}</td>
     <td>{{ product.description }}</td>
     <td>{{ product.count }}</td>
-    <td>{{ product.category.name }}</td>
+    <td *ngIf="product.category">{{ product.category.name }}</td>
+    <td *ngIf="!product.category">{{ product.catName }}</td>
     <td>
       <button type="button" class="btn btn-default alert-success" aria-label="Left Align">
         <span class="glyphicon glyphicon-eye-open" [routerLink]="['/products/', product.id]" aria-hidden="true"></span>

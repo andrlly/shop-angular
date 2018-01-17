@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 import { CategoriesService } from "../../shared/services/categories.service";
@@ -11,41 +11,45 @@ import { Category } from "../../shared/models/category.model";
 })
 export class CategoriesComponent implements OnInit {
 
-  categories: Category;
-  catFrom: FormGroup;
+  categories: Category[] = [];
+  category: Category;
+  addCatFrom: FormGroup;
+
+  catName: string;
 
   constructor(
-      private categoriesService: CategoriesService
+      private categoriesService: CategoriesService,
   ) { }
 
   ngOnInit() {
-    this.categoriesService.getCategories()
-        .subscribe((categories: Category) => {
-          this.categories = categories;
-        });
+    this.loadCategories();
 
-    this.catFrom = new FormGroup({
+    this.addCatFrom = new FormGroup({
         name: new FormControl('', [Validators.required])
     });
 
   }
 
-  updateCategory(id) {
-    this.submitCatFrom(id);
+  editing() {
+      this.loadCategories();
   }
 
-  submitCatFrom(id) {
-    const body = this.catFrom.value;
-    this.categoriesService.updateCategory(id, body)
-        .subscribe((data) => {
-          console.log(data);
-          this.categories.isEdit = false;
-        })
+  loadCategories() {
+      this.categoriesService.getCategories()
+          .subscribe((categories: Category[]) => {
+              this.categories = categories;
+          });
   }
 
-  onDeleteCategory(id) {
-    this.categoriesService.deleteCategory(id)
-        .subscribe(data => console.log(data));
+  addProductSubmit() {
+      const body = this.addCatFrom.value;
+      this.categoriesService.addCategory(body)
+          .subscribe((category: Category) => {
+              body['id'] = category.id;
+              this.categories.push(body);
+              this.addCatFrom.reset();
+          })
   }
+
 
 }

@@ -16,7 +16,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   apForm: FormGroup;
   @Input() products: Product[] = [];
-  categories: Category;
+  categories: Category[] = [];
 
   s1: Subscription;
 
@@ -29,7 +29,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
       this.s1 = this.categoriesService.getCategories()
-          .subscribe((categories: Category) => {
+          .subscribe((categories: Category[]) => {
               this.categories = categories;
           });
 
@@ -45,8 +45,16 @@ export class AddProductComponent implements OnInit, OnDestroy {
     const body = this.apForm.value;
     this.productsService.addProduct(body)
         .subscribe((product: Product) => {
+
+            this.categories.forEach((cat) => {
+                if (cat.id == body.category_id) {
+                    console.log(cat.id);
+                    console.log(cat.name);
+                    body['catName'] = cat.name;
+                }
+            });
+
             body['id'] = product.id;
-            console.log(body);
             this.apForm.reset();
             this.products.push(body);
         });

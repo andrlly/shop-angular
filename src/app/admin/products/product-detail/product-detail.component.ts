@@ -5,6 +5,8 @@ import { Subscription } from "rxjs/Subscription";
 
 import { Product } from "../../../shared/models/product.model";
 import { ProductsService } from "../../../shared/services/products.service";
+import { Category } from "../../../shared/models/category.model";
+import { CategoriesService } from "../../../shared/services/categories.service";
 
 @Component({
   selector: 'app-product-detail',
@@ -19,6 +21,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   count: number;
   category_id: number;
 
+  categories: Category[] = [];
+
   epForm: FormGroup;
 
   s1: Subscription;
@@ -29,7 +33,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   constructor(
       private route: ActivatedRoute,
       private router: Router,
-      private productsService: ProductsService
+      private productsService: ProductsService,
+      private categoriesService: CategoriesService
   ) { }
 
   ngOnInit() {
@@ -49,6 +54,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
               category_id: this.category_id
           });
       });
+
+      this.categoriesService.getCategories()
+          .subscribe((categories: Category[]) => {
+              this.categories = categories;
+          });
 
       this.epForm = new FormGroup({
           name: new FormControl('', [Validators.required]),
@@ -73,7 +83,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         .subscribe(() => {
             this.router.navigate(['/admin/products']);
     });
-
   }
 
   ngOnDestroy() {
