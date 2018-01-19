@@ -38,7 +38,29 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           });
   }
 
-  ngOnDestroy() {
+  selectProduct(id) {
+
+      // window.localStorage.setItem('products_id', JSON.stringify([id]));
+      this.saveDataToLocalStorage(id);
+  }
+
+    saveDataToLocalStorage(id)
+    {
+        if(localStorage.getItem("products_id")) {
+            const products_id = JSON.parse(localStorage.getItem("products_id"));
+            this.setProductId(id, products_id);
+        } else {
+            this.setProductId(id);
+        }
+    }
+
+    setProductId(id: number, products = []) {
+        products.push(id);
+        localStorage.setItem("products_id", JSON.stringify(products));
+    }
+
+
+    ngOnDestroy() {
     if (this.s1) this.s1.unsubscribe();
     if (this.s2) this.s2.unsubscribe();
   }

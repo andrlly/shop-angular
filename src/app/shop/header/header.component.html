@@ -16,6 +16,9 @@
 
 		<ul class="navbar-nav float-right">
 			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['/cart']">Cart</a>
+			</li>
+			<li class="nav-item">
 				<a *ngIf="!logButton" class="nav-link" [routerLink]="['/admin']">Admin</a>
 			</li>
 			<li class="nav-item">
