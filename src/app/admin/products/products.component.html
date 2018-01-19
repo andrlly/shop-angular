@@ -7,7 +7,9 @@
     <th scope="col">id</th>
     <th scope="col">Name</th>
     <th scope="col">Description</th>
+    <th scope="col">Price</th>
     <th scope="col">Count</th>
+    <th scope="col">Image</th>
     <th scope="col">Category</th>
     <th scope="col">Options</th>
   </tr>
@@ -17,7 +19,9 @@
     <td>{{ product.id }}</td>
     <td>{{ product.name }}</td>
     <td>{{ product.description }}</td>
+    <td>{{ product.price }}</td>
     <td>{{ product.count }}</td>
+    <td><img width="150" src="http://ukiegoods.loc/uploads/products/{{product.id}}.jpg?{{updated_at}}" alt=""></td>
     <td *ngIf="product.category">{{ product.category.name }}</td>
     <td *ngIf="!product.category">{{ product.catName }}</td>
     <td>

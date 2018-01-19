@@ -38,7 +38,6 @@ export class AuthComponent implements OnInit {
 
   submitForm() {
       const credentials = this.authForm.value;
-
       this.authService.attemptAuth(this.authType, credentials)
           .subscribe(user => {
             if (user) {
@@ -49,9 +48,6 @@ export class AuthComponent implements OnInit {
                 console.log('Something went wrong!');
             }
           });
-
-
-
   }
 
 }

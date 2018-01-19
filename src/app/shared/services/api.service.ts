@@ -2,10 +2,6 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/catch';
-
-// import { environment } from '../../../environments/environment';
-
 
 @Injectable()
 export class ApiService {
@@ -17,7 +13,7 @@ export class ApiService {
 
     private setHeaders(): Headers {
         const headersConfig = {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json, multipart/form-data',
             'Accept': 'application/json'
         };
         return new Headers(headersConfig);

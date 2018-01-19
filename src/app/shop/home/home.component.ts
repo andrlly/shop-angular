@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from "./home.service";
-import { Home } from "./home.model";
-import { Http } from "@angular/http";
-
+import { HomeService } from "../../shared/services/home.service";
+import { Home } from "../../shared/models/home.model";
 
 @Component({
   selector: 'app-home',
@@ -12,18 +10,20 @@ import { Http } from "@angular/http";
 export class HomeComponent implements OnInit {
 
     body: string;
-    banner: string;
+    updated_at: any;
 
-    constructor(private homeService: HomeService,
-    private http: Http
-    ) { }
+    constructor(private homeService: HomeService) { }
 
     ngOnInit() {
+        console.log(this.updated_at);
+
         this.homeService.getConfigs()
             .subscribe((config: Home) => {
                 this.body = config[0].body;
-                this.banner = config[0].banner;
+                this.updated_at = config[0].updated_at;
             });
+
     }
+
 
 }

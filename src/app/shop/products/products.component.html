@@ -1,9 +1,10 @@
 <div class="container">
-
   <div class="row">
     <div class="col-sm-6 col-md-4" *ngFor="let product of products">
       <div class="thumbnail">
+        <img src="http://ukiegoods.loc/uploads/products/{{ product.id }}.jpg">
         <div class="caption">
+          <h3>Price: {{ product.price }}</h3>
           <h3>{{ product.name }}</h3>
           <p>{{ product.description }}</p>
           <a [routerLink]="['/products/', product.id]" class="btn btn-primary" role="button">Detail</a>

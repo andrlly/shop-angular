@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { AuthService } from "../../admin/auth/auth.service";
 
-
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

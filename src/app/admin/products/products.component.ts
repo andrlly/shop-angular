@@ -10,6 +10,7 @@ import { ProductsService } from "../../shared/services/products.service";
 export class ProductsComponent implements OnInit {
 
   products: Product[] = [];
+  updated_at: number;
 
   constructor(private productsService: ProductsService) { }
 
@@ -17,6 +18,10 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts()
         .subscribe((products: Product[]) => {
           this.products = products;
+          products.forEach(p => {
+              this.updated_at = new Date(p.updated_at).getTime();
+          });
+          this.updated_at = new Date(products[0].updated_at).getTime();
         })
   }
 

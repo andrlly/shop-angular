@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 import { CategoriesService } from "../../shared/services/categories.service";
@@ -50,6 +50,5 @@ export class CategoriesComponent implements OnInit {
               this.addCatFrom.reset();
           })
   }
-
 
 }

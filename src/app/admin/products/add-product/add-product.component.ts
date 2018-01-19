@@ -1,5 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ProductsService } from "../../../shared/services/products.service";
 import { Product } from "../../../shared/models/product.model";
 import { CategoriesService } from "../../../shared/services/categories.service";
@@ -14,17 +14,22 @@ import { Subscription } from "rxjs/Subscription";
 export class AddProductComponent implements OnInit, OnDestroy {
 
 
-  apForm: FormGroup;
-  @Input() products: Product[] = [];
-  categories: Category[] = [];
 
+  @Input() products: Product[] = [];
+  @ViewChild('fileInput') fileInput: ElementRef;
+
+  categories: Category[] = [];
+  apForm: FormGroup;
   s1: Subscription;
 
 
   constructor(
       private productsService: ProductsService,
-      private categoriesService: CategoriesService
-  ) { }
+      private categoriesService: CategoriesService,
+      private fb: FormBuilder
+  ) {
+      this.createForm();
+  }
 
   ngOnInit() {
 
@@ -32,24 +37,43 @@ export class AddProductComponent implements OnInit, OnDestroy {
           .subscribe((categories: Category[]) => {
               this.categories = categories;
           });
-
-      this.apForm = new FormGroup({
-          name: new FormControl('', [Validators.required]),
-          description: new FormControl('', [Validators.required]),
-          count: new FormControl('', [Validators.required, Validators.min(0)]),
-          category_id: new FormControl('', [Validators.required])
-      });
   }
+
+    createForm() {
+        this.apForm = this.fb.group({
+            name: ['', [Validators.required]],
+            description: ['', [Validators.required]],
+            price: ['', [Validators.required]],
+            count: ['',[Validators.required, Validators.min(0)]],
+            category_id: ['', [Validators.required]],
+            image: null
+        });
+    }
+
+    onFileChange(event) {
+        let reader = new FileReader();
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                this.apForm.get('image').setValue({
+                    filename: file.name,
+                    filetype: file.type,
+                    value: reader.result.split(',')[1]
+                });
+            };
+        }
+    }
 
   addProductSubmit() {
     const body = this.apForm.value;
+    let { filename, filetype, value } = this.apForm.value.image;
     this.productsService.addProduct(body)
         .subscribe((product: Product) => {
-
+            console.log(body);
+            console.log(product);
             this.categories.forEach((cat) => {
                 if (cat.id == body.category_id) {
-                    console.log(cat.id);
-                    console.log(cat.name);
                     body['catName'] = cat.name;
                 }
             });

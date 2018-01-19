@@ -1,3 +1,17 @@
-<p>
-  dashboard works!
-</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="body">Body</label>
+    <textarea name="body" id="body" formControlName="body" cols="100" rows="5" [value]="body">{{ body }}</textarea>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" id="image" (change)="onFileChange($event)" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+  </div>
+  <!--<div>-->
+    <!--<img width="100" src="http://ukiegoods.loc/uploads/conf.jpg?{{updated_at | date:'mmss'}}" alt="">-->
+  <!--</div>-->
+  <hr>
+  <button type="submit" [disabled]="form.invalid" class="btn btn-success">Submit</button>
+</form>

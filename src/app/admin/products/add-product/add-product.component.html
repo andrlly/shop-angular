@@ -14,8 +14,18 @@
     </select>
   </div>
   <div class="form-group">
+    <label for="price">Price</label>
+    <input id="price" name="price" type="number" formControlName="price" min="0"/>
+    <p class="alert-danger" *ngIf="apForm.get('price').invalid && apForm.get('price').touched ">price is empty!</p>
+  </div>
+  <div class="form-group">
     <label for="count">Count</label>
     <input id="count" name="count" type="number" formControlName="count" min="1"/>
+  </div>
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" id="image" (change)="onFileChange($event)" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
   </div>
   <button type="submit" [disabled]="apForm.invalid" class="btn btn-primary">Add</button>
 </form>

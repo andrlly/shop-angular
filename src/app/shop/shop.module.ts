@@ -6,7 +6,7 @@ import { ShopComponent } from './shop.component';
 import { ProductsComponent } from './products/products.component';
 import { HeaderComponent } from './header/header.component';
 import { CommonModule } from '@angular/common';
-import { HomeService } from "./home/home.service";
+import { HomeService } from "../shared/services/home.service";
 import { HttpClientModule } from "@angular/common/http";
 import { HttpModule } from "@angular/http";
 import { ApiService } from "../shared/services/api.service";

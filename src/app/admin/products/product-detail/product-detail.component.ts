@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
 
@@ -18,8 +18,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   id: number;
   name: string;
   description: string;
+  price: number;
   count: number;
   category_id: number;
+  image: string;
+
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   categories: Category[] = [];
 
@@ -34,8 +38,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private router: Router,
       private productsService: ProductsService,
-      private categoriesService: CategoriesService
-  ) { }
+      private categoriesService: CategoriesService,
+      private fb: FormBuilder
+  ) {
+      this.createForm();
+  }
 
   ngOnInit() {
 
@@ -44,6 +51,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       .subscribe( (product: Product) => {
           this.name = product.name;
           this.description = product.description;
+          this.price = product.price;
           this.count = product.count;
           this.category_id = product.category_id;
 
@@ -51,7 +59,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
               name: this.name,
               description: this.description,
               count: this.count,
-              category_id: this.category_id
+              price: this.price,
+              category_id: this.category_id,
+              image: null
           });
       });
 
@@ -59,15 +69,18 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           .subscribe((categories: Category[]) => {
               this.categories = categories;
           });
-
-      this.epForm = new FormGroup({
-          name: new FormControl('', [Validators.required]),
-          description: new FormControl('', [Validators.required]),
-          count: new FormControl('', [Validators.required, Validators.min(0)]),
-          category_id: new FormControl('', [Validators.required])
-      });
-
   }
+
+    createForm() {
+        this.epForm = this.fb.group({
+            name: [this.name, [Validators.required]],
+            description: [this.description, [Validators.required]],
+            price: [this.price, [Validators.required]],
+            count: [this.count, [Validators.required, Validators.min(0)]],
+            category_id: [this.category_id, [Validators.required]],
+            image: null
+        });
+    }
 
   editProductSubmit() {
     const body = this.epForm.value;
@@ -77,6 +90,21 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
             console.log('product edited!');
         });
   }
+
+    onFileChange(event) {
+        let reader = new FileReader();
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                this.epForm.get('image').setValue({
+                    filename: file.name,
+                    filetype: file.type,
+                    value: reader.result.split(',')[1]
+                });
+            };
+        }
+    }
 
   deleteProduct() {
     this.productsService.deleteProduct(this.id)
