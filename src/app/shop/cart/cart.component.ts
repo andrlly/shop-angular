@@ -11,34 +11,38 @@ export class CartComponent implements OnInit {
 
   products = [];
   productsCart;
-  subtotal: any;
-  quantity: number = 1;
+  count: number;
+  price: number;
   ids = [];
 
   constructor(private productsService: ProductsService) { }
 
   ngOnInit() {
-      this.products = JSON.parse(localStorage.getItem("cart"));
 
-      // this.products.sortedUniq(this.products)
+      this.products = JSON.parse(localStorage.getItem("cart"));
 
       this.products.forEach(product => {
           this.ids.push(product.id);
       });
 
       this.getCartProduct(this.ids.toString());
+      // this.subtotal(150, this.count);
 
   }
 
-  calcSubtotal(price, count) {
-    return this.subtotal = price * count;
+  subtotal(price, count) {
+    return  price * count;
   }
 
   getCartProduct(ids) {
       this.productsService.getProductByIds(ids)
           .subscribe((products: Product) => {
               this.productsCart = products;
-          })
+          });
+  }
+
+  changeCount() {
+      this.subtotal(this.price, this.count);
   }
 
   remove() {
