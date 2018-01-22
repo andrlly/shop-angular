@@ -16,7 +16,14 @@ export class ProductsService {
     getProductById(id: number): Observable<Product> {
         return this.api.get(`products/${id}`)
             .map(data => {
-                console.log(data);
+                return data;
+            });
+    }
+
+    getProductByIds(ids): Observable<Product> {
+        console.log(ids);
+        return this.api.post(`productsArr`, {ids: ids})
+            .map(data => {
                 return data;
             });
     }

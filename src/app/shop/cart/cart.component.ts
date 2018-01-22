@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from "../../shared/services/api.service";
 import { ProductsService } from "../../shared/services/products.service";
+import { Product } from "../../shared/models/product.model";
 
 @Component({
   selector: 'app-cart',
@@ -9,32 +9,40 @@ import { ProductsService } from "../../shared/services/products.service";
 })
 export class CartComponent implements OnInit {
 
-  products: any;
-  id: any;
+  products = [];
+  productsCart;
+  subtotal: any;
+  quantity: number = 1;
+  ids = [];
 
-  constructor(
-      private productsService: ProductsService,
-  ) { }
+  constructor(private productsService: ProductsService) { }
 
   ngOnInit() {
-     // let products = JSON.parse(window.localStorage.getItem("products_id"));
-     // this.products = products;
-      let unique = JSON.parse(window.localStorage.getItem("products_id")).filter((v, i, a) => a.indexOf(v) === i);
+      this.products = JSON.parse(localStorage.getItem("cart"));
 
+      // this.products.sortedUniq(this.products)
 
-      console.log(unique);
-      unique.filter(id => {
-        console.log(id);
-        this.productsService.getProductById(id)
-            .subscribe(p => console.log(p));
+      this.products.forEach(product => {
+          this.ids.push(product.id);
       });
 
+      this.getCartProduct(this.ids.toString());
 
   }
 
+  calcSubtotal(price, count) {
+    return this.subtotal = price * count;
+  }
 
+  getCartProduct(ids) {
+      this.productsService.getProductByIds(ids)
+          .subscribe((products: Product) => {
+              this.productsCart = products;
+          })
+  }
 
+  remove() {
 
-
+  }
 
 }

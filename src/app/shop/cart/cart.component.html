@@ -1,3 +1,47 @@
-<ul *ngFor="let p of products">
-  <li>{{p.name}}</li>
-</ul>
+<div class="container">
+  <table id="cart" class="table table-hover table-condensed">
+    <thead>
+    <tr>
+      <th style="width:50%">Product</th>
+      <th style="width:10%">Price</th>
+      <th style="width:8%">Quantity</th>
+      <th style="width:22%" class="text-center">Subtotal</th>
+      <th style="width:10%"></th>
+    </tr>
+    </thead>
+    <tbody>
+{{ productsCart | json }}
+    <tr *ngFor="let product of productsCart;">
+      <td data-th="Product">
+        <div class="row">
+          <div class="col-sm-2 hidden-xs"><a [routerLink]="['/products', product.id]"><img src="http://ukiegoods.loc/uploads/products/{{product.id}}.jpg" class="img-responsive"/></a></div>
+          <div class="col-sm-10">
+            <h4 class="nomargin"><a [routerLink]="['/products', product.id]">{{product.name}}</a></h4>
+            <p>{{product.description}}</p>
+          </div>
+        </div>
+      </td>
+      <td data-th="Price">{{product.price}}</td>
+      <td data-th="Quantity">
+        <input type="number" class="form-control text-center" [value]="product.count" min="1" ngModel>
+      </td>
+      <td data-th="Subtotal" class="text-center">1.99</td>
+      <td class="actions" data-th="">
+        <!--<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>-->
+        <button class="btn btn-danger btn-sm" (click)="remove()"><i class="glyphicon glyphicon-trash"></i></button>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr class="visible-xs">
+      <td class="text-center"><strong>Total 1.99</strong></td>
+    </tr>
+    <tr>
+      <td><a [routerLink]="['/products']" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Shopping</a></td>
+      <td colspan="2" class="hidden-xs"></td>
+      <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+      <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+    </tr>
+    </tfoot>
+  </table>
+</div>

@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
 import { Product } from "../../../shared/models/product.model";
 import { ProductsService } from "../../../shared/services/products.service";
+import { StorageService } from "../../../shared/services/storage.service";
 
 @Component({
   selector: 'app-product-detail',
@@ -12,6 +13,7 @@ import { ProductsService } from "../../../shared/services/products.service";
 export class ProductDetailComponent implements OnInit, OnDestroy {
 
   id: number;
+  price: number;
   name: string;
   description: string;
   count: number;
@@ -23,7 +25,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   constructor(
       private route: ActivatedRoute,
-      private productsService: ProductsService
+      private productsService: ProductsService,
+      private storage: StorageService
   ) { }
 
   ngOnInit() {
@@ -31,6 +34,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       this.s2 = this.productsService.getProductById(this.id)
           .subscribe( (product: Product) => {
               this.name = product.name;
+              this.price = product.price;
               this.description = product.description;
               this.count = product.count;
               this.category_id = product.category_id;
@@ -38,26 +42,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           });
   }
 
-  selectProduct(id) {
-
-      // window.localStorage.setItem('products_id', JSON.stringify([id]));
-      this.saveDataToLocalStorage(id);
+  addToCartProduct() {
+      this.storage.saveDataToLocalStorage(this.id, this.price);
   }
-
-    saveDataToLocalStorage(id)
-    {
-        if(localStorage.getItem("products_id")) {
-            const products_id = JSON.parse(localStorage.getItem("products_id"));
-            this.setProductId(id, products_id);
-        } else {
-            this.setProductId(id);
-        }
-    }
-
-    setProductId(id: number, products = []) {
-        products.push(id);
-        localStorage.setItem("products_id", JSON.stringify(products));
-    }
 
 
     ngOnDestroy() {
