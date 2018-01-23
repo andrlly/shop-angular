@@ -9,67 +9,64 @@ import { Category } from "../../../shared/models/category.model";
 import { CategoriesService } from "../../../shared/services/categories.service";
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.css']
+    selector: 'app-product-detail',
+    templateUrl: './product-detail.component.html',
+    styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
 
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  count: number;
-  category_id: number;
-  image: string;
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    count: number;
+    category_id: number;
+    image: string;
 
-  @ViewChild('fileInput') fileInput: ElementRef;
+    @ViewChild('fileInput') fileInput: ElementRef;
 
-  categories: Category[] = [];
+    categories: Category[] = [];
 
-  epForm: FormGroup;
+    epForm: FormGroup;
 
-  s1: Subscription;
-  s2: Subscription;
-  s3: Subscription;
+    s1: Subscription;
+    s2: Subscription;
+    s3: Subscription;
 
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private productsService: ProductsService,
+                private categoriesService: CategoriesService,
+                private fb: FormBuilder) {
+        this.createForm();
+    }
 
-  constructor(
-      private route: ActivatedRoute,
-      private router: Router,
-      private productsService: ProductsService,
-      private categoriesService: CategoriesService,
-      private fb: FormBuilder
-  ) {
-      this.createForm();
-  }
+    ngOnInit() {
 
-  ngOnInit() {
+        this.s1 = this.route.params.subscribe(params => this.id = params['id']);
+        this.s2 = this.productsService.getProductById(this.id)
+            .subscribe((product: Product) => {
+                this.name = product.name;
+                this.description = product.description;
+                this.price = product.price;
+                this.count = product.count;
+                this.category_id = product.category_id;
 
-    this.s1 = this.route.params.subscribe(params => this.id = params['id']);
-    this.s2 = this.productsService.getProductById(this.id)
-      .subscribe( (product: Product) => {
-          this.name = product.name;
-          this.description = product.description;
-          this.price = product.price;
-          this.count = product.count;
-          this.category_id = product.category_id;
+                this.epForm.setValue({
+                    name: this.name,
+                    description: this.description,
+                    count: this.count,
+                    price: this.price,
+                    category_id: this.category_id,
+                    image: null
+                });
+            });
 
-          this.epForm.setValue({
-              name: this.name,
-              description: this.description,
-              count: this.count,
-              price: this.price,
-              category_id: this.category_id,
-              image: null
-          });
-      });
-
-      this.categoriesService.getCategories()
-          .subscribe((categories: Category[]) => {
-              this.categories = categories;
-          });
-  }
+        this.categoriesService.getCategories()
+            .subscribe((categories: Category[]) => {
+                this.categories = categories;
+            });
+    }
 
     createForm() {
         this.epForm = this.fb.group({
@@ -82,18 +79,18 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         });
     }
 
-  editProductSubmit() {
-    const body = this.epForm.value;
-    this.s3 = this.productsService.editProduct(this.id, body)
-        .subscribe((product: Product) => {
-            console.log(product);
-            console.log('product edited!');
-        });
-  }
+    editProductSubmit() {
+        const body = this.epForm.value;
+        this.s3 = this.productsService.editProduct(this.id, body)
+            .subscribe((product: Product) => {
+                console.log(product);
+                console.log('product edited!');
+            });
+    }
 
     onFileChange(event) {
         let reader = new FileReader();
-        if(event.target.files && event.target.files.length > 0) {
+        if (event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
             reader.readAsDataURL(file);
             reader.onload = () => {
@@ -106,16 +103,16 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-  deleteProduct() {
-    this.productsService.deleteProduct(this.id)
-        .subscribe(() => {
-            this.router.navigate(['/admin/products']);
-    });
-  }
+    deleteProduct() {
+        this.productsService.deleteProduct(this.id)
+            .subscribe(() => {
+                this.router.navigate(['/admin/products']);
+            });
+    }
 
-  ngOnDestroy() {
-    if (this.s1) this.s1.unsubscribe();
-    if (this.s2) this.s2.unsubscribe();
-    if (this.s3) this.s3.unsubscribe();
-  }
+    ngOnDestroy() {
+        if (this.s1) this.s1.unsubscribe();
+        if (this.s2) this.s2.unsubscribe();
+        if (this.s3) this.s3.unsubscribe();
+    }
 }

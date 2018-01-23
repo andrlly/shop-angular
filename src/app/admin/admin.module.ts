@@ -16,26 +16,27 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoryEditorComponent } from './categories/category-editor/category-editor.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  declarations: [
-    AdminHeaderComponent,
-    DashboardComponent,
-    OrdersComponent,
-    AdminComponent,
-    AuthComponent,
-    ProductsComponent,
-    ProductDetailComponent,
-    AddProductComponent,
-    CategoriesComponent,
-    CategoryEditorComponent
-  ],
-  providers: [
-    AuthService
-  ]
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
+    declarations: [
+        AdminHeaderComponent,
+        DashboardComponent,
+        OrdersComponent,
+        AdminComponent,
+        AuthComponent,
+        ProductsComponent,
+        ProductDetailComponent,
+        AddProductComponent,
+        CategoriesComponent,
+        CategoryEditorComponent
+    ],
+    providers: [
+        AuthService
+    ]
 })
-export class AdminModule { }
+export class AdminModule {
+}

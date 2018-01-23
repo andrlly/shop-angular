@@ -14,22 +14,23 @@ import { CategoriesService } from "./shared/services/categories.service";
 
 
 const routes: Routes = [
-  { path: '**', pathMatch: 'full', component: NotFoundComponent },
+    {path: '**', pathMatch: 'full', component: NotFoundComponent},
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-      NotFoundComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ShopModule,
-    AdminModule,
-    RouterModule.forRoot(routes),
-  ],
-  providers: [ApiService, AuthGuard, ProductsService, CategoriesService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NotFoundComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ShopModule,
+        AdminModule,
+        RouterModule.forRoot(routes),
+    ],
+    providers: [ApiService, AuthGuard, ProductsService, CategoriesService],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

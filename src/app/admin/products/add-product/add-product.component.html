@@ -1,31 +1,33 @@
 <form [formGroup]="apForm" (ngSubmit)="addProductSubmit()">
-  <div class="form-group">
-    <input type="text" class="form-control" name="name" formControlName="name" placeholder="Product name">
-    <p class="alert-danger" *ngIf="apForm.get('name').invalid && apForm.get('name').touched ">name is empty!</p>
-  </div>
-  <div class="form-group">
-    <textarea type="text" class="form-control" cols="3" name="description" formControlName="description" placeholder="Description"></textarea>
-    <p class="alert-danger" *ngIf="apForm.get('description').invalid && apForm.get('description').touched ">description is empty!</p>
-  </div>
-  <div class="form-group">
-    <label for="category_id">Category</label>
-    <select class="form-control" id="category_id" name="category_id" formControlName="category_id">
-      <option *ngFor="let cat of categories;" [value]="cat.id">{{ cat.name }}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="price">Price</label>
-    <input id="price" name="price" type="number" formControlName="price" min="0"/>
-    <p class="alert-danger" *ngIf="apForm.get('price').invalid && apForm.get('price').touched ">price is empty!</p>
-  </div>
-  <div class="form-group">
-    <label for="count">Count</label>
-    <input id="count" name="count" type="number" formControlName="count" min="1"/>
-  </div>
-  <div class="form-group">
-    <label for="image">Image</label>
-    <input type="file" id="image" (change)="onFileChange($event)" #fileInput>
-    <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
-  </div>
-  <button type="submit" [disabled]="apForm.invalid" class="btn btn-primary">Add</button>
+    <div class="form-group">
+        <input type="text" class="form-control" name="name" formControlName="name" placeholder="Product name">
+        <p class="alert-danger" *ngIf="apForm.get('name').invalid && apForm.get('name').touched ">name is empty!</p>
+    </div>
+    <div class="form-group">
+        <textarea type="text" class="form-control" cols="3" name="description" formControlName="description"
+                  placeholder="Description"></textarea>
+        <p class="alert-danger" *ngIf="apForm.get('description').invalid && apForm.get('description').touched ">
+            description is empty!</p>
+    </div>
+    <div class="form-group">
+        <label for="category_id">Category</label>
+        <select class="form-control" id="category_id" name="category_id" formControlName="category_id">
+            <option *ngFor="let cat of categories;" [value]="cat.id">{{ cat.name }}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" name="price" type="number" formControlName="price" min="0"/>
+        <p class="alert-danger" *ngIf="apForm.get('price').invalid && apForm.get('price').touched ">price is empty!</p>
+    </div>
+    <div class="form-group">
+        <label for="count">Count</label>
+        <input id="count" name="count" type="number" formControlName="count" min="1"/>
+    </div>
+    <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" id="image" (change)="onFileChange($event)" #fileInput>
+        <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+    </div>
+    <button type="submit" [disabled]="apForm.invalid" class="btn btn-primary">Add</button>
 </form>

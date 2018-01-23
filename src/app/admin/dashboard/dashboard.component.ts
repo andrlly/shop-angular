@@ -6,36 +6,32 @@ import { Home } from "../../shared/models/home.model";
 import { HomeService } from "../../shared/services/home.service";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
 
+    form: FormGroup;
 
-  form: FormGroup;
+    body: string;
+    updated_at: string;
 
-  body: string;
-  updated_at: string;
+    @ViewChild('fileInput') fileInput: ElementRef;
 
-  @ViewChild('fileInput') fileInput: ElementRef;
+    constructor(private api: ApiService,
+                private homeService: HomeService,
+                private fb: FormBuilder) {
+        this.createForm();
+    }
 
-  constructor(
-      private api: ApiService,
-      private homeService: HomeService,
-      private fb: FormBuilder
-  ) {
-    this.createForm();
-  }
+    ngOnInit() {
+        this.homeService.getConfigs()
+            .subscribe((config: Home) => {
+                this.body = config[0].body;
+            });
 
-  ngOnInit() {
-      this.homeService.getConfigs()
-          .subscribe((config: Home) => {
-              this.body = config[0].body;
-          });
-
-  }
-
+    }
 
     createForm() {
         this.form = this.fb.group({
@@ -46,7 +42,7 @@ export class DashboardComponent implements OnInit {
 
     onFileChange(event) {
         let reader = new FileReader();
-        if(event.target.files && event.target.files.length > 0) {
+        if (event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
             reader.readAsDataURL(file);
             reader.onload = () => {
@@ -61,7 +57,7 @@ export class DashboardComponent implements OnInit {
 
     onSubmit() {
         const body = this.form.value;
-        let { filename, filetype, value } = this.form.value.image;
+        let {filename, filetype, value} = this.form.value.image;
         this.homeService.updateConfigs(body)
             .subscribe(res => {
                 console.log(res);

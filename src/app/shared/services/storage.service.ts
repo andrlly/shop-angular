@@ -6,7 +6,7 @@ export class StorageService {
     cartCount = new ReplaySubject<number>(1);
 
     constructor() {
-        if(this.cart) {
+        if (this.cart) {
             this.getProductsCount(JSON.parse(this.cart));
         }
     }
@@ -16,9 +16,8 @@ export class StorageService {
     }
 
 
-    saveDataToLocalStorage(id: number, price: number)
-    {
-        if(this.cart) {
+    saveDataToLocalStorage(id: number, price: number) {
+        if (this.cart) {
             const cart = JSON.parse(this.cart);
             this.setProductId(id, price, cart);
         } else {
@@ -28,7 +27,7 @@ export class StorageService {
 
     setProductId(id: number, price: number, products = []) {
         const currentProduct = products.find(p => p.id === id);
-        if(currentProduct) {
+        if (currentProduct) {
             const currentProductIndex = products.findIndex(p => p.id === id);
             products[currentProductIndex].count += 1;
         } else {

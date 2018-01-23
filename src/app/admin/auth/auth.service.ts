@@ -8,9 +8,8 @@ import { User } from "../../shared/models/user.model";
 @Injectable()
 export class AuthService {
 
-    constructor(
-        private apiService: ApiService
-    ) { }
+    constructor(private apiService: ApiService) {
+    }
 
     private isAuthenticated = false;
 

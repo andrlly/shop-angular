@@ -6,9 +6,8 @@ import { Category } from "../models/category.model";
 
 @Injectable()
 export class CategoriesService {
-    constructor(
-        private api: ApiService
-    ) {}
+    constructor(private api: ApiService) {
+    }
 
     getCategories() {
         return this.api.get('categories');

@@ -7,7 +7,8 @@ import { Product } from "../models/product.model";
 @Injectable()
 export class ProductsService {
 
-    constructor(private api: ApiService) {}
+    constructor(private api: ApiService) {
+    }
 
     getProducts(): Observable<Product[]> {
         return this.api.get('products');

@@ -7,44 +7,39 @@ import { Category } from "../../../shared/models/category.model";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+    selector: 'app-add-product',
+    templateUrl: './add-product.component.html',
+    styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit, OnDestroy {
 
+    @Input() products: Product[] = [];
+    @ViewChild('fileInput') fileInput: ElementRef;
 
+    categories: Category[] = [];
+    apForm: FormGroup;
+    s1: Subscription;
 
-  @Input() products: Product[] = [];
-  @ViewChild('fileInput') fileInput: ElementRef;
+    constructor(private productsService: ProductsService,
+                private categoriesService: CategoriesService,
+                private fb: FormBuilder) {
+        this.createForm();
+    }
 
-  categories: Category[] = [];
-  apForm: FormGroup;
-  s1: Subscription;
+    ngOnInit() {
 
-
-  constructor(
-      private productsService: ProductsService,
-      private categoriesService: CategoriesService,
-      private fb: FormBuilder
-  ) {
-      this.createForm();
-  }
-
-  ngOnInit() {
-
-      this.s1 = this.categoriesService.getCategories()
-          .subscribe((categories: Category[]) => {
-              this.categories = categories;
-          });
-  }
+        this.s1 = this.categoriesService.getCategories()
+            .subscribe((categories: Category[]) => {
+                this.categories = categories;
+            });
+    }
 
     createForm() {
         this.apForm = this.fb.group({
             name: ['', [Validators.required]],
             description: ['', [Validators.required]],
             price: ['', [Validators.required]],
-            count: ['',[Validators.required, Validators.min(0)]],
+            count: ['', [Validators.required, Validators.min(0)]],
             category_id: ['', [Validators.required]],
             image: null
         });
@@ -52,7 +47,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
     onFileChange(event) {
         let reader = new FileReader();
-        if(event.target.files && event.target.files.length > 0) {
+        if (event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
             reader.readAsDataURL(file);
             reader.onload = () => {
@@ -65,27 +60,27 @@ export class AddProductComponent implements OnInit, OnDestroy {
         }
     }
 
-  addProductSubmit() {
-    const body = this.apForm.value;
-    let { filename, filetype, value } = this.apForm.value.image;
-    this.productsService.addProduct(body)
-        .subscribe((product: Product) => {
-            console.log(body);
-            console.log(product);
-            this.categories.forEach((cat) => {
-                if (cat.id == body.category_id) {
-                    body['catName'] = cat.name;
-                }
+    addProductSubmit() {
+        const body = this.apForm.value;
+        let {filename, filetype, value} = this.apForm.value.image;
+        this.productsService.addProduct(body)
+            .subscribe((product: Product) => {
+                console.log(body);
+                console.log(product);
+                this.categories.forEach((cat) => {
+                    if (cat.id == body.category_id) {
+                        body['catName'] = cat.name;
+                    }
+                });
+
+                body['id'] = product.id;
+                this.apForm.reset();
+                this.products.push(body);
             });
+    }
 
-            body['id'] = product.id;
-            this.apForm.reset();
-            this.products.push(body);
-        });
-  }
-
-  ngOnDestroy() {
-      if (this.s1) this.s1.unsubscribe();
-  }
+    ngOnDestroy() {
+        if (this.s1) this.s1.unsubscribe();
+    }
 
 }

@@ -1,23 +1,25 @@
 <hr>
 <form [formGroup]="addCatFrom" (ngSubmit)="addProductSubmit()">
-  <div class="form-group">
-    <input type="text" class="form-control" name="name" formControlName="name" placeholder="Category name">
-    <p class="alert-danger" *ngIf="addCatFrom.get('name').invalid && addCatFrom.get('name').touched ">name is empty!</p>
-  </div>
-  <button type="submit" [disabled]="addCatFrom.invalid" class="btn btn-primary">Add</button>
+    <div class="form-group">
+        <input type="text" class="form-control" name="name" formControlName="name" placeholder="Category name">
+        <p class="alert-danger" *ngIf="addCatFrom.get('name').invalid && addCatFrom.get('name').touched ">name is
+            empty!</p>
+    </div>
+    <button type="submit" [disabled]="addCatFrom.invalid" class="btn btn-primary">Add</button>
 </form>
 
 <hr>
 
 <table class="table">
-  <thead class="thead-dark">
-  <tr>
-    <th scope="col">id</th>
-    <th scope="col">Name</th>
-    <th scope="col">Options</th>
-  </tr>
-  </thead>
-  <tbody>
-      <app-category-editor *ngFor="let category of categories;" [category]="category" (onEdit)="editing()"></app-category-editor>
-  </tbody>
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Options</th>
+    </tr>
+    </thead>
+    <tbody>
+    <app-category-editor *ngFor="let category of categories;" [category]="category"
+                         (onEdit)="editing()"></app-category-editor>
+    </tbody>
 </table>

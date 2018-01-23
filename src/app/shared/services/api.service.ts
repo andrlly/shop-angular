@@ -29,12 +29,12 @@ export class ApiService {
     }
 
     public post(url: string = '', body: Object = {}): Observable<any> {
-        return this.http.post(this.getUrl(url), JSON.stringify(body), { headers: this.setHeaders() })
+        return this.http.post(this.getUrl(url), JSON.stringify(body), {headers: this.setHeaders()})
             .map((response: Response) => response.json());
     }
 
     public put(url: string = '', body: Object = {}): Observable<any> {
-        return this.http.put(this.getUrl(url), JSON.stringify(body), { headers: this.setHeaders() })
+        return this.http.put(this.getUrl(url), JSON.stringify(body), {headers: this.setHeaders()})
             .map((response: Response) => response.json());
     }
 

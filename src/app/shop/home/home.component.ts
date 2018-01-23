@@ -3,16 +3,17 @@ import { HomeService } from "../../shared/services/home.service";
 import { Home } from "../../shared/models/home.model";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
 
     body: string;
     updated_at: any;
 
-    constructor(private homeService: HomeService) { }
+    constructor(private homeService: HomeService) {
+    }
 
     ngOnInit() {
         console.log(this.updated_at);

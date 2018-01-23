@@ -8,18 +8,21 @@ import { CartComponent } from "./cart/cart.component";
 import { CartResolver } from "./cart/cart.resolve";
 
 const routes: Routes = [
-  { path: '', component: ShopComponent, children: [
-    { path: '', component: HomeComponent },
-    { path: 'cart', component: CartComponent, resolve: {products: CartResolver} },
-    { path: 'products', component: ProductsComponent },
-    { path: 'products/:id', component: ProductDetailComponent }
-  ]},
+    {
+        path: '', component: ShopComponent, children: [
+            {path: '', component: HomeComponent},
+            {path: 'cart', component: CartComponent, resolve: {products: CartResolver}},
+            {path: 'products', component: ProductsComponent},
+            {path: 'products/:id', component: ProductDetailComponent}
+        ]
+    },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forChild(routes) ],
-  exports: [ RouterModule ]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 
-export class ShopRoutingModule {}
+export class ShopRoutingModule {
+}
 

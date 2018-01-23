@@ -6,9 +6,8 @@ import { Home } from "../models/home.model";
 
 @Injectable()
 export class HomeService {
-    constructor(
-        private api: ApiService,
-    ) { }
+    constructor(private api: ApiService,) {
+    }
 
     getConfigs(): Observable<Home> {
         return this.api.get('configs');

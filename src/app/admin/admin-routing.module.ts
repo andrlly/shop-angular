@@ -10,21 +10,24 @@ import { ProductDetailComponent } from "./products/product-detail/product-detail
 import { CategoriesComponent } from "./categories/categories.component";
 
 const routes: Routes = [
-  { path: 'admin', pathMatch: 'full', redirectTo: 'admin/dashboard' },
-  { path: 'admin', component: AdminComponent, children: [
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'categories', component: CategoriesComponent },
-    { path: 'products', component: ProductsComponent },
-    { path: 'products/:id', component: ProductDetailComponent},
-    { path: 'orders', component: OrdersComponent },
-  ]},
-  { path: 'login', component: AuthComponent },
-  { path: 'registration', component: AuthComponent },
+    {path: 'admin', pathMatch: 'full', redirectTo: 'admin/dashboard'},
+    {
+        path: 'admin', component: AdminComponent, children: [
+            {path: 'dashboard', component: DashboardComponent},
+            {path: 'categories', component: CategoriesComponent},
+            {path: 'products', component: ProductsComponent},
+            {path: 'products/:id', component: ProductDetailComponent},
+            {path: 'orders', component: OrdersComponent},
+        ]
+    },
+    {path: 'login', component: AuthComponent},
+    {path: 'registration', component: AuthComponent},
 ];
 
 @NgModule({
-  imports: [ RouterModule.forChild(routes) ],
-  exports: [ RouterModule ]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 
-export class AdminRoutingModule {}
+export class AdminRoutingModule {
+}

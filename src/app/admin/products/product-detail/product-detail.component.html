@@ -1,50 +1,53 @@
 <div class="title-block">
-  <h3 class="title">
-    <a [routerLink]="['/admin/products']"><i class="glyphicon glyphicon-chevron-left"></i></a>
-    Edit {{ id }}
-    <span class="sparkline bar"></span>
-  </h3>
+    <h3 class="title">
+        <a [routerLink]="['/admin/products']"><i class="glyphicon glyphicon-chevron-left"></i></a>
+        Edit {{ id }}
+        <span class="sparkline bar"></span>
+    </h3>
 </div>
 <hr>
 <form [formGroup]="epForm" (ngSubmit)="editProductSubmit()">
-  <div class="form-group">
-    <label for="name">Product Name</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="Name" formControlName="name" [value]="name">
-    <p class="alert-danger" *ngIf="epForm.get('name').invalid && epForm.get('name').touched ">Name is empty!</p>
-  </div>
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea class="form-control" id="description" name="description" formControlName="description" [value]="description" rows="3"></textarea>
-    <p class="alert-danger" *ngIf="epForm.get('description').invalid && epForm.get('description').touched ">description is empty!</p>
-  </div>
-  <div class="form-group">
-    <label for="category_id">Category</label>
-    <select class="form-control" id="category_id" name="category_id" formControlName="category_id">
-      <option *ngFor="let cat of categories;" [value]="cat.id">{{ cat.name }}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="price">Price</label>
-    <input id="price" name="price" type="number" formControlName="price" [value]="price" min="0"/>
-    <p class="alert-danger" *ngIf="epForm.get('price').invalid && epForm.get('price').touched ">price is empty!</p>
-  </div>
-  <div class="form-group">
     <div class="form-group">
-      <label for="count">Count</label>
-      <input id="count" name="count" type="number" formControlName="count" min="1" [value]="count"/>
+        <label for="name">Product Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" formControlName="name"
+               [value]="name">
+        <p class="alert-danger" *ngIf="epForm.get('name').invalid && epForm.get('name').touched ">Name is empty!</p>
     </div>
-    <p class="alert-danger" *ngIf="epForm.get('count').invalid && epForm.get('count').touched ">count is empty!</p>
-  </div>
-  <div class="form-group">
-    <label for="image">Image</label>
-    <input type="file" id="image" (change)="onFileChange($event)" #fileInput>
-    <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" formControlName="description"
+                  [value]="description" rows="3"></textarea>
+        <p class="alert-danger" *ngIf="epForm.get('description').invalid && epForm.get('description').touched ">
+            description is empty!</p>
+    </div>
+    <div class="form-group">
+        <label for="category_id">Category</label>
+        <select class="form-control" id="category_id" name="category_id" formControlName="category_id">
+            <option *ngFor="let cat of categories;" [value]="cat.id">{{ cat.name }}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" name="price" type="number" formControlName="price" [value]="price" min="0"/>
+        <p class="alert-danger" *ngIf="epForm.get('price').invalid && epForm.get('price').touched ">price is empty!</p>
+    </div>
+    <div class="form-group">
+        <div class="form-group">
+            <label for="count">Count</label>
+            <input id="count" name="count" type="number" formControlName="count" min="1" [value]="count"/>
+        </div>
+        <p class="alert-danger" *ngIf="epForm.get('count').invalid && epForm.get('count').touched ">count is empty!</p>
+    </div>
+    <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" id="image" (change)="onFileChange($event)" #fileInput>
+        <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+        <hr>
+        <div>
+            <img width="150" src="http://ukiegoods.loc/uploads/products/{{id}}.jpg?{{updated_at | date:'mmss'}}" alt="">
+        </div>
+    </div>
     <hr>
-    <div>
-      <img width="150" src="http://ukiegoods.loc/uploads/products/{{id}}.jpg?{{updated_at | date:'mmss'}}" alt="">
-    </div>
-  </div>
-  <hr>
-  <button type="submit" class="btn btn-primary">Save</button>
-  <button type="submit" class="btn btn-danger" (click)="deleteProduct()">Delete</button>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-danger" (click)="deleteProduct()">Delete</button>
 </form>

@@ -15,20 +15,21 @@ import { StorageService } from "../shared/services/storage.service";
 import { CartResolver } from "./cart/cart.resolve";
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    ShopComponent,
-    ProductsComponent,
-    HeaderComponent,
-    ProductDetailComponent,
-    CartComponent
-  ],
-  imports: [
-    CommonModule,
-    ShopRoutingModule,
-    FormsModule,
-    HttpModule
-  ],
-  providers: [HomeService, StorageService, CartResolver],
+    declarations: [
+        HomeComponent,
+        ShopComponent,
+        ProductsComponent,
+        HeaderComponent,
+        ProductDetailComponent,
+        CartComponent
+    ],
+    imports: [
+        CommonModule,
+        ShopRoutingModule,
+        FormsModule,
+        HttpModule
+    ],
+    providers: [HomeService, StorageService, CartResolver],
 })
-export class ShopModule { }
+export class ShopModule {
+}
