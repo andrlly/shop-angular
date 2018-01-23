@@ -39,7 +39,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
             name: ['', [Validators.required]],
             description: ['', [Validators.required]],
             price: ['', [Validators.required]],
-            count: ['', [Validators.required, Validators.min(0)]],
             category_id: ['', [Validators.required]],
             image: null
         });
@@ -65,8 +64,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
         let {filename, filetype, value} = this.apForm.value.image;
         this.productsService.addProduct(body)
             .subscribe((product: Product) => {
-                console.log(body);
-                console.log(product);
                 this.categories.forEach((cat) => {
                     if (cat.id == body.category_id) {
                         body['catName'] = cat.name;
@@ -75,8 +72,15 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
                 body['id'] = product.id;
                 this.apForm.reset();
+                this.clearFile();
+                // console.log(body);
                 this.products.push(body);
             });
+    }
+
+    clearFile() {
+        this.apForm.get('image').setValue(null);
+        this.fileInput.nativeElement.value = '';
     }
 
     ngOnDestroy() {

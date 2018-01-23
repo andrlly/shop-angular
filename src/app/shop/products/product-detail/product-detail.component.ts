@@ -16,7 +16,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   price: number;
   name: string;
   description: string;
-  count: number;
   category_id: number;
   catName: string;
 
@@ -36,7 +35,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
               this.name = product.name;
               this.price = product.price;
               this.description = product.description;
-              this.count = product.count;
               this.category_id = product.category_id;
               this.catName = product['category'].name;
           });

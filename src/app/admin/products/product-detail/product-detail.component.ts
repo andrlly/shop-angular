@@ -19,7 +19,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     name: string;
     description: string;
     price: number;
-    count: number;
     category_id: number;
     image: string;
 
@@ -49,13 +48,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
                 this.name = product.name;
                 this.description = product.description;
                 this.price = product.price;
-                this.count = product.count;
                 this.category_id = product.category_id;
 
                 this.epForm.setValue({
                     name: this.name,
                     description: this.description,
-                    count: this.count,
                     price: this.price,
                     category_id: this.category_id,
                     image: null
@@ -73,7 +70,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
             name: [this.name, [Validators.required]],
             description: [this.description, [Validators.required]],
             price: [this.price, [Validators.required]],
-            count: [this.count, [Validators.required, Validators.min(0)]],
             category_id: [this.category_id, [Validators.required]],
             image: null
         });
@@ -101,6 +97,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
                 });
             };
         }
+    }
+
+    clearFile() {
+        this.epForm.get('image').setValue(null);
+        this.fileInput.nativeElement.value = '';
     }
 
     deleteProduct() {
