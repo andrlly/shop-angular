@@ -11,7 +11,7 @@
     </thead>
     <tbody>
 
-    <tr *ngFor="let product of productsCart;">
+    <tr *ngFor="let product of products;">
       <td data-th="Product">
         <div class="row">
           <div class="col-sm-2 hidden-xs"><a [routerLink]="['/products', product.id]"><img src="http://ukiegoods.loc/uploads/products/{{product.id}}.jpg" class="img-responsive"/></a></div>
@@ -21,14 +21,12 @@
           </div>
         </div>
       </td>
-      <td data-th="Price">{{product.price}}</td>
+      <td data-th="Price">{{product.count}}</td>
       <td data-th="Quantity">
-        <input type="number" class="form-control text-center" [value]="product.count" min="1" (change)="changeCount()" >
+        <input type="number" class="form-control text-center" #count [(ngModel)]="product.count" min="1">
       </td>
       <td data-th="Subtotal" class="text-center">
-        {{product.price * product.count  | currency: '$'}}
-        <!--{{ subtotal(product.price, product.count) }} =-->
-      <!--{{  product.count }}-->
+        {{ count.value * product.count }}
       </td>
       <td class="actions" data-th="">
         <!--<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>-->
@@ -43,7 +41,7 @@
     <tr>
       <td><a [routerLink]="['/products']" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Shopping</a></td>
       <td colspan="2" class="hidden-xs"></td>
-      <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+      <td class="hidden-xs text-center"><strong>Total {{ total }}</strong></td>
       <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
     </tr>
     </tfoot>

@@ -3,6 +3,8 @@ import { ProductsService } from "../../shared/services/products.service";
 import { Product } from "../../shared/models/product.model";
 
 import 'rxjs/add/operator/map';
+import { StorageService } from "../../shared/services/storage.service";
+import { ActivatedRoute, Data } from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -11,62 +13,37 @@ import 'rxjs/add/operator/map';
 })
 export class CartComponent implements OnInit {
 
-  // products: Product[] = [];
-  productsCart: Product[] = [];
-  count: number;
-  price: number;
-  // ids: any = [];
+    products = [];
+    productsCart;
+    quantity = 1;
 
-  constructor(private productsService: ProductsService) { }
+
+  constructor(private productsService: ProductsService,
+              private storageService: StorageService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+      this.route.data
+          .subscribe((data: Data) => {
+              this.productsCart = data.products;
+          }
+      );
 
-      const ids = JSON.parse(localStorage.getItem("cart")).map(product => product.id).toString();
-      this.getCartProduct(ids);
+      // this.getCartProduct(this.ids);
+      // this.storageService.getProductCount(this.ids);
       // this.subtotal(150, this.count);
   }
 
-  // subtotal(price, count) {
-  //   return  price * count;
-  // }
-
-  getCartProduct(ids) {
-      this.productsService.getProductByIds(ids)
-          .subscribe((products: Product[]) => {
-              console.log(products);
-              this.productsCart = products;
-          });
-  }
-
-    subtotal() {
-        // return this.productsCart.reduce((acc, item) => {
-        //     console.log(acc);
-        //     console.log(item);
-        //     return item.cost * item.qty;
-        // }, 0);
+    get total() {
+        return this.productsCart.reduce((prev, next) => {
+            return prev + (next.count * next.price);
+        }, 0);
     }
 
-  changeCount() {
-      // console.log(this.subtotal());
-      // this.subtotal();
-      //
-      // const currentProduct = this.productsCart.find(p => p.id === id);
-      // if(currentProduct) {
-      //     const currentProductIndex = this.productsCart.findIndex(p => p.id === id);
-      //     this.productsCart[currentProductIndex].count += 1;
-      // } else {
-      //     this.productsCart.push({count: this.count});
-      // }
-
-  }
-
   remove(id) {
-      // console.log(id);
-      const deleted = this.productsCart.map(p => p)
-      console.log(deleted);
-      // this.productsCart.splice(this.productsCart.indexOf(id), 1);
-
-      // delete (this.productsCart[currentProductIndex]);
+      const removeIndex = this.productsCart.map(item => { return item.id; }).indexOf(id);
+      this.storageService.removeProduct(id);
+      this.productsCart.splice(removeIndex, 1);
   }
 
 }

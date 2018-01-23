@@ -1,4 +1,5 @@
 import { ReplaySubject } from "rxjs/ReplaySubject";
+import 'rxjs/add/operator/map';
 
 export class StorageService {
 
@@ -44,5 +45,16 @@ export class StorageService {
 
         this.cartCount.next(count);
     }
+
+    getProductCount(ids) {
+
+    }
+
+    removeProduct(id: number) {
+        const cart = JSON.parse(this.cart);
+        const updatedCart = cart.filter(c => +c.id !== id);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+
 
 }
