@@ -20,7 +20,7 @@ export class ProductsService {
             });
     }
 
-    getProductByIds(ids): Observable<Product> {
+    getProductByIds(ids) {
         return this.api.post(`productsArr`, {ids: ids})
             .map(data => {
                 return data;

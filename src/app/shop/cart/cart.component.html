@@ -25,12 +25,14 @@
       <td data-th="Quantity">
         <input type="number" class="form-control text-center" [value]="product.count" min="1" (change)="changeCount()" >
       </td>
-      <td data-th="Subtotal" class="text-center">{{ subtotal(product.price, product.count) }} =
+      <td data-th="Subtotal" class="text-center">
+        {{product.price * product.count  | currency: '$'}}
+        <!--{{ subtotal(product.price, product.count) }} =-->
       <!--{{  product.count }}-->
       </td>
       <td class="actions" data-th="">
         <!--<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>-->
-        <button class="btn btn-danger btn-sm" (click)="remove()"><i class="glyphicon glyphicon-trash"></i></button>
+        <button class="btn btn-danger btn-sm" (click)="remove(product.id)"><i class="glyphicon glyphicon-trash"></i></button>
       </td>
     </tr>
     </tbody>
