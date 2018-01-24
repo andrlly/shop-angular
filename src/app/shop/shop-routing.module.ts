@@ -6,12 +6,14 @@ import { ShopComponent } from './shop.component';
 import { ProductDetailComponent } from "./products/product-detail/product-detail.component";
 import { CartComponent } from "./cart/cart.component";
 import { CartResolver } from "./cart/cart.resolve";
+import { CheckoutComponent } from "./cart/checkout/checkout.component";
 
 const routes: Routes = [
     {
         path: '', component: ShopComponent, children: [
             {path: '', component: HomeComponent},
             {path: 'cart', component: CartComponent, resolve: {products: CartResolver}},
+            {path: 'checkout', component: CheckoutComponent, resolve: {products: CartResolver}},
             {path: 'products', component: ProductsComponent},
             {path: 'products/:id', component: ProductDetailComponent}
         ]

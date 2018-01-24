@@ -14,6 +14,7 @@ import { AddProductComponent } from './products/add-product/add-product.componen
 import { AuthService } from "./auth/auth.service";
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryEditorComponent } from './categories/category-editor/category-editor.component';
+import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import { CategoryEditorComponent } from './categories/category-editor/category-e
         ProductDetailComponent,
         AddProductComponent,
         CategoriesComponent,
-        CategoryEditorComponent
+        CategoryEditorComponent,
+        OrderDetailComponent
     ],
     providers: [
         AuthService

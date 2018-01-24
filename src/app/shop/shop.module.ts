@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from "@angular/http";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ShopRoutingModule } from './shop-routing.module';
 import { HomeComponent } from './home/home.component';
@@ -13,6 +13,7 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { CartComponent } from './cart/cart.component';
 import { StorageService } from "../shared/services/storage.service";
 import { CartResolver } from "./cart/cart.resolve";
+import { CheckoutComponent } from './cart/checkout/checkout.component';
 
 @NgModule({
     declarations: [
@@ -21,12 +22,14 @@ import { CartResolver } from "./cart/cart.resolve";
         ProductsComponent,
         HeaderComponent,
         ProductDetailComponent,
-        CartComponent
+        CartComponent,
+        CheckoutComponent
     ],
     imports: [
         CommonModule,
         ShopRoutingModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpModule
     ],
     providers: [HomeService, StorageService, CartResolver],

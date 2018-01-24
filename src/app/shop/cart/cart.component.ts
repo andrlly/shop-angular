@@ -24,9 +24,12 @@ export class CartComponent implements OnInit {
         this.route.data
             .subscribe((data: Data) => {
                     this.productsCart = data.products;
-                    console.log(this.productsCart);
                 }
             );
+    }
+
+    get cart() {
+        return JSON.parse(localStorage.getItem("cart"));
     }
 
     get total() {
