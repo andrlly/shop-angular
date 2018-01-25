@@ -40,8 +40,6 @@ export class AuthComponent implements OnInit {
         this.authService.attemptAuth(this.authType, credentials)
             .subscribe(user => {
                 if (user) {
-                    window.localStorage.setItem('user', JSON.stringify(user));
-                    this.authService.login();
                     this.router.navigate(['/admin']);
                 } else {
                     console.log('Something went wrong!');

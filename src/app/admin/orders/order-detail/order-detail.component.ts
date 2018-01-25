@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { OrderProductsService } from "../../../shared/services/order-products.service";
+import { OrdersService } from "../../../shared/services/order.service";
 import { ActivatedRoute } from "@angular/router";
-import { OrderProduct } from "../../../shared/models/order-product.model";
+import { Order } from "../../../shared/models/order.model";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
@@ -24,14 +24,14 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     s1: Subscription;
     s2: Subscription;
 
-    constructor(private orderProductsService: OrderProductsService,
+    constructor(private ordersService: OrdersService,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit() {
         this.s1 = this.route.params.subscribe(params => this.id = params['id']);
-        this.s2 = this.orderProductsService.getOrderById(this.id)
-            .subscribe((order: OrderProduct[]) => {
+        this.s2 = this.ordersService.getOrderById(this.id)
+            .subscribe((order: Order[]) => {
                 this.user_name = order['user'].name;
                 this.user_email = order['user'].email;
                 this.user_comment = order['user'].comment;

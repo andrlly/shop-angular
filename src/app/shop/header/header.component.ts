@@ -10,24 +10,16 @@ import { StorageService } from "../../shared/services/storage.service";
 })
 export class HeaderComponent implements OnInit {
 
+    isLoggedIn = this.authService.isLoggedIn();
+    productsCount: number;
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private authService: AuthService,
                 private storageService: StorageService) {
     }
 
-    logButton: boolean = false;
-    productsCount: number;
-
     ngOnInit() {
-        this.route.queryParams
-            .subscribe((params: Params) => {
-                if (params['accessDenied']) {
-                    this.logButton = true;
-                } else {
-                    this.logButton = false;
-                }
-            });
 
         this.storageService.cartCount.subscribe(count => {
             this.productsCount = count;
@@ -36,7 +28,6 @@ export class HeaderComponent implements OnInit {
 
     onLogout() {
         this.authService.logout();
-        this.logButton = false;
         this.router.navigate(['']);
     }
 

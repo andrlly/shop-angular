@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 export class ApiService {
 
     private baseUrl = 'http://ukiegoods.loc/';
+    // private baseUrl = 'http://news.hbmdev.com/';
 
     constructor(public http: Http) {
     }

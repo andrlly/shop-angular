@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data } from "@angular/router";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { OrderProductsService } from "../../../shared/services/order-products.service";
-import { Observable } from "rxjs/Rx";
-import { Subscription } from "rxjs/Subscription";
-import { OrderUsersService } from "../../../shared/services/order-users.service";
+import { OrdersService } from "../../../shared/services/order.service";
+import { AuthService } from "../../../admin/auth/auth.service";
 
 @Component({
     selector: 'app-checkout',
@@ -15,19 +13,17 @@ export class CheckoutComponent implements OnInit {
 
     productsCheck;
     products = [];
-
+    isLoggedIn = +this.authService.isLoggedIn();
     user_id: number;
     checkForm: FormGroup;
 
-    formType: string;
 
     constructor(private route: ActivatedRoute,
-                private orderUsersService: OrderUsersService,
-                private orderProductsService: OrderProductsService) {
+                private ordersService: OrdersService,
+                private authService: AuthService) {
     }
 
     ngOnInit() {
-
         this.route.data
             .subscribe((data: Data) => {
                     this.products = this.cart.sort((a, b) => {
@@ -39,7 +35,6 @@ export class CheckoutComponent implements OnInit {
                             ...this.products[i]
                         }
                     });
-                // console.log(this.productsCheck);
 
                 }
             );
@@ -48,17 +43,20 @@ export class CheckoutComponent implements OnInit {
     }
 
     createForm() {
-        this.formType === 'loggined' ? 'Sign in' : 'Sign up';
-        if (this.formType === 'registration') {
-            this.checkForm.addControl('name', new FormControl('', Validators.required));
-            this.checkForm.addControl('password', new FormControl('', Validators.required));
-            this.checkForm.addControl('password_confirmation', new FormControl('', Validators.required));
+        if (this.isLoggedIn) {
+            this.checkForm = new FormGroup({
+                comment: new FormControl('', [Validators.required])
+            });
+        } else {
+            this.checkForm = new FormGroup({
+                name: new FormControl('', [Validators.required]),
+                email: new FormControl('', [Validators.required, Validators.email]),
+                password: new FormControl('', [Validators.required]),
+                password_confirmation: new FormControl('', [Validators.required]),
+                comment: new FormControl('', [Validators.required]),
+            });
+
         }
-        this.checkForm = new FormGroup({
-            name: new FormControl('', [Validators.required]),
-            email: new FormControl('', [Validators.required, Validators.email]),
-            comment: new FormControl('', [Validators.required])
-        });
     }
 
     get cart() {
@@ -72,42 +70,27 @@ export class CheckoutComponent implements OnInit {
     }
 
     submitForm() {
-        const user_data = {
-            'name': this.checkForm.value.name,
-            'email': this.checkForm.value.email,
-            'comment': this.checkForm.value.comment,
-        };
 
-
-
-        // Observable.combineLatest(
-        //     this.orderProductsService.addOrderProduct(product_data),
-            this.orderUsersService.addOrderUser(user_data)
+        if (!this.isLoggedIn) {
+            const credentials = this.checkForm.value;
+            this.authService.attemptAuth('register', credentials)
                 .subscribe(res => {
-                    console.log(res);
-                    console.log(res['id']);
+                    this.isLoggedIn = null;
                     this.user_id = res['id'];
-
                 });
-        // ).subscribe((res) => {
-            // this.bill = data[0];
-            // this.currency = data[1];
-            // this.isLoaded = true;
-            // console.log(res[0]);
-            // console.log(res[1]);
-        // });
+        }
+        this.authService.getUserById(this.user_id)
+            .subscribe(res => console.log(res));
 
 
         const product_data = {
-            // 'price': this.productsCheck.price,
-            'price': 400,
-            'count': 2,
-            'product_id': 1,
-            'order_user_id': this.user_id,
+            'products': this.productsCheck,
+            'user_id': this.user_id,
         };
 
-        this.orderProductsService.addOrderProduct(product_data)
+        console.log(product_data);
+
+        this.ordersService.addOrder(product_data)
             .subscribe(res => console.log(res));
-            // .subscribe(res => console.log(res));
     }
 }

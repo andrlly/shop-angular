@@ -2,24 +2,24 @@ import { Injectable } from "@angular/core";
 
 import { ApiService } from "./api.service";
 import { Observable } from "rxjs/Observable";
-import { OrderProduct } from "../models/order-product.model";
+import { Order } from "../models/order.model";
 
 @Injectable()
-export class OrderProductsService {
+export class OrdersService {
 
     constructor(private api: ApiService) {
     }
 
-    getOrders(): Observable<OrderProduct[]> {
+    getOrders(): Observable<Order[]> {
         return this.api.get(`orders`);
     }
 
-    getOrderById(id): Observable<OrderProduct[]> {
+    getOrderById(id): Observable<Order[]> {
         return this.api.get(`orders/${id}`)
     }
 
-    addOrderProduct(body): Observable<OrderProduct[]> {
-        return this.api.post(`orderproduct/add`, body)
+    addOrder(body): Observable<Order[]> {
+        return this.api.post(`order/add`, body)
             .map(data => {
                 return data;
             });

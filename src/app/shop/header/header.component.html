@@ -17,15 +17,15 @@
         <ul class="navbar-nav float-right">
             <li class="nav-item">
 
-                <a class="nav-link" [routerLink]="['/cart']"><strong *ngIf="productsCount">{{ productsCount }}</strong>
-                    | Cart</a>
+                <a class="nav-link" [routerLink]="['/cart']"><strong *ngIf="productsCount">{{
+                    productsCount }} | </strong> Cart</a>
             </li>
             <li class="nav-item">
-                <a *ngIf="!logButton" class="nav-link" [routerLink]="['/admin']">Admin</a>
+                <a *ngIf="isLoggedIn" class="nav-link" [routerLink]="['/admin']">Admin</a>
             </li>
             <li class="nav-item">
-                <a *ngIf="logButton" class="nav-link" [routerLink]="['/login']">Log in</a>
-                <a *ngIf="!logButton" class="nav-link" (click)="onLogout()">Log out</a>
+                <a *ngIf="!isLoggedIn" class="nav-link" [routerLink]="['/login']">Log in</a>
+                <a *ngIf="isLoggedIn" class="nav-link" (click)="onLogout()">Log out</a>
             </li>
         </ul>
         <!--<form class="form-inline my-2 my-lg-0">-->

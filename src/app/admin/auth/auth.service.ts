@@ -11,29 +11,35 @@ export class AuthService {
     constructor(private apiService: ApiService) {
     }
 
-    private isAuthenticated = false;
+    // private isAuthenticated = false;
 
-    login() {
-        this.isAuthenticated = true;
-    }
+    // login(user) {
+    //     this.isAuthenticated = true;
+    //     window.localStorage.setItem('user', JSON.stringify(user));
+    // }
 
     logout() {
-        this.isAuthenticated = false;
+        // this.isAuthenticated = false;
         window.localStorage.clear();
     }
 
-    isLoggedIn(): boolean {
-        return this.isAuthenticated;
+    isLoggedIn() {
+        // return this.isAuthenticated;
+        return localStorage.getItem('user');
     }
 
     // find user by email
     attemptAuth(type, credentials): Observable<User> {
-        console.log(credentials);
         const route = type === 'login' ? '/auth' : '/registration';
         return this.apiService.post('user' + route, credentials)
             .map(user => {
+                localStorage.setItem('user', JSON.stringify(user.user_id));
                 return user.user_id;
             });
+    }
+
+    getUserById(id) {
+        return this.apiService.get(`user/${id}`);
     }
 
 }

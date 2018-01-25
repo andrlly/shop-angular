@@ -11,8 +11,7 @@ import { ApiService } from "./shared/services/api.service";
 import { AuthGuard } from "./admin/auth/auth.guard";
 import { ProductsService } from "./shared/services/products.service";
 import { CategoriesService } from "./shared/services/categories.service";
-import { OrderProductsService } from "./shared/services/order-products.service";
-import { OrderUsersService } from "./shared/services/order-users.service";
+import { OrdersService } from "./shared/services/order.service";
 
 
 const routes: Routes = [
@@ -31,7 +30,7 @@ const routes: Routes = [
         AdminModule,
         RouterModule.forRoot(routes),
     ],
-    providers: [ApiService, AuthGuard, ProductsService, CategoriesService, OrderProductsService, OrderUsersService],
+    providers: [ApiService, AuthGuard, ProductsService, CategoriesService, OrdersService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
