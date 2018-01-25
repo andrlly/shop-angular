@@ -24,21 +24,8 @@ export class CheckoutComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.data
-            .subscribe((data: Data) => {
-                    this.products = this.cart.sort((a, b) => {
-                        +a.id > +b.id ? 1 : -1;
-                    });
-                    this.productsCheck = data.products.map((p, i) => {
-                        return {
-                            ...p,
-                            ...this.products[i]
-                        }
-                    });
 
-                }
-            );
-
+        this.productsCheck = this.checkout;
         this.createForm();
     }
 
@@ -55,12 +42,11 @@ export class CheckoutComponent implements OnInit {
                 password_confirmation: new FormControl('', [Validators.required]),
                 comment: new FormControl('', [Validators.required]),
             });
-
         }
     }
 
-    get cart() {
-        return JSON.parse(localStorage.getItem("cart"));
+    get checkout() {
+        return JSON.parse(localStorage.getItem("checkout"));
     }
 
     get total() {
@@ -70,27 +56,24 @@ export class CheckoutComponent implements OnInit {
     }
 
     submitForm() {
-
+        const product_data = {
+            "products": JSON.stringify(this.productsCheck),
+            "user_id": this.isLoggedIn,
+            "price": 900,
+            "count": 3
+        };
         if (!this.isLoggedIn) {
             const credentials = this.checkForm.value;
-            this.authService.attemptAuth('register', credentials)
+            this.authService.attemptAuth("register", credentials)
                 .subscribe(res => {
-                    this.isLoggedIn = null;
-                    this.user_id = res['id'];
+                    product_data.user_id = +res;
+                    this.ordersService.addOrder(product_data).subscribe(order => console.log("order", order));
                 });
+        } else {
+            console.log(product_data);
+            this.ordersService.addOrder(product_data).subscribe(order => console.log("order", order));
         }
-        this.authService.getUserById(this.user_id)
-            .subscribe(res => console.log(res));
-
-
-        const product_data = {
-            'products': this.productsCheck,
-            'user_id': this.user_id,
-        };
-
-        console.log(product_data);
-
-        this.ordersService.addOrder(product_data)
-            .subscribe(res => console.log(res));
     }
+
+
 }

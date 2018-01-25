@@ -16,7 +16,7 @@ export class CartResolver implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot,
             state: RouterStateSnapshot): Observable<any> {
-        this.products = JSON.parse(localStorage.getItem('cart'));
+        this.products = JSON.parse(localStorage.getItem('cart')) || [];
         this.ids = this.products.map(p => p.id);
         return this.productsService.getProductByIds(this.ids.join(','))
             .pipe(catchError((err) => this.router.navigateByUrl('/')));

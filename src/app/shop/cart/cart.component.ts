@@ -15,6 +15,7 @@ export class CartComponent implements OnInit {
 
     products = [];
     productsCart;
+    isEmptyCart: boolean;
 
     constructor(private storageService: StorageService,
                 private route: ActivatedRoute,
@@ -22,8 +23,10 @@ export class CartComponent implements OnInit {
     }
 
     ngOnInit() {
+        localStorage.removeItem('checkout');
         this.route.data
             .subscribe((data: Data) => {
+                this.isEmptyCart = data.lenght ? false : true;
                     this.products = this.cart.sort((a, b) => {
                         +a.id > +b.id ? 1 : -1;
                     });
@@ -38,7 +41,7 @@ export class CartComponent implements OnInit {
     }
 
     get cart() {
-        return JSON.parse(localStorage.getItem("cart"));
+        return JSON.parse(localStorage.getItem("cart")) || [];
     }
 
     get total() {
@@ -48,7 +51,7 @@ export class CartComponent implements OnInit {
     }
 
     goToCheckout() {
-        localStorage.setItem("cart", JSON.stringify(this.productsCart));
+        localStorage.setItem("checkout", JSON.stringify(this.productsCart));
         this.router.navigate(['/checkout']);
 
     }
