@@ -14,10 +14,12 @@ import { OrderUsersService } from "../../../shared/services/order-users.service"
 export class CheckoutComponent implements OnInit {
 
     productsCheck;
+    products = [];
 
     user_id: number;
-
     checkForm: FormGroup;
+
+    formType: string;
 
     constructor(private route: ActivatedRoute,
                 private orderUsersService: OrderUsersService,
@@ -25,9 +27,20 @@ export class CheckoutComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.route.data
             .subscribe((data: Data) => {
-                    this.productsCheck = data.products;
+                    this.products = this.cart.sort((a, b) => {
+                        +a.id > +b.id ? 1 : -1;
+                    });
+                    this.productsCheck = data.products.map((p, i) => {
+                        return {
+                            ...p,
+                            ...this.products[i]
+                        }
+                    });
+                // console.log(this.productsCheck);
+
                 }
             );
 
@@ -35,11 +48,21 @@ export class CheckoutComponent implements OnInit {
     }
 
     createForm() {
+        this.formType === 'loggined' ? 'Sign in' : 'Sign up';
+        if (this.formType === 'registration') {
+            this.checkForm.addControl('name', new FormControl('', Validators.required));
+            this.checkForm.addControl('password', new FormControl('', Validators.required));
+            this.checkForm.addControl('password_confirmation', new FormControl('', Validators.required));
+        }
         this.checkForm = new FormGroup({
             name: new FormControl('', [Validators.required]),
             email: new FormControl('', [Validators.required, Validators.email]),
             comment: new FormControl('', [Validators.required])
         });
+    }
+
+    get cart() {
+        return JSON.parse(localStorage.getItem("cart"));
     }
 
     get total() {

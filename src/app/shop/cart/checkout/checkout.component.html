@@ -30,25 +30,30 @@
           <div class="panel-body">
 
             <div class="form-group" *ngFor="let product of productsCheck;">
+                <!--{{ product|json }}-->
               <div class="col-sm-3 col-xs-3">
                 <img class="img-responsive" src="http://ukiegoods.loc/uploads/products/{{product.id}}.jpg" />
               </div>
               <div class="col-sm-6 col-xs-6">
                 <div class="col-xs-12">{{product.name}}</div>
-                <!--<div class="col-xs-12"><small>Quantity:<span>{{product.count}}</span></small></div>-->
+                <div class="col-xs-12"><small>Quantity:<span>{{ product.count }}</span></small></div>
               </div>
               <div class="col-sm-3 col-xs-3 text-right">
                 <h6>{{product.price}}</h6>
               </div>
+              <!--<div class="col-sm-3 col-xs-6">-->
+                <!--<div class="col-xs-12"><span>{{ product.count *  product.price}}</span></div>-->
+              <!--</div>-->
+
             </div>
 
-            <div class="form-group"><hr /></div>
-            <div class="form-group">
-              <div class="col-xs-12">
-                <strong>Subtotal</strong>
-                <!--<div class="pull-right"><span>{{ product.count * product.price }}</span></div>-->
-              </div>
-            </div>
+            <!--<div class="form-group"><hr /></div>-->
+            <!--<div class="form-group">-->
+              <!--<div class="col-xs-12">-->
+                <!--<strong>Subtotal</strong>-->
+                <!--<div class="pull-right"><span>{{ count.value *  product.price}}</span></div>-->
+              <!--</div>-->
+            <!--</div>-->
             <div class="form-group"><hr /></div>
             <div class="form-group">
               <div class="col-xs-12">
@@ -63,6 +68,11 @@
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
         <!--SHIPPING METHOD-->
         <form [formGroup]="checkForm" (ngSubmit)="submitForm()">
+          <h3 class="text-center">{{title}}</h3>
+          <p class="text-center">
+            <a *ngIf="formType === 'login'" routerLink="/registration">Need an account?</a>
+            <a *ngIf="formType !== 'login'" routerLink="/login">Have an account?</a>
+          </p>
           <div class="panel panel-info">
             <div class="panel-heading">Address</div>
             <div class="panel-body">
@@ -71,7 +81,6 @@
                   <h4>Shipping Address</h4>
                 </div>
               </div>
-
               <div class="form-group">
                 <div class="col-md-12"><strong>Name:</strong>*</div>
                 <div class="col-md-12"><input type="text" class="form-control" formControlName="name" /></div>

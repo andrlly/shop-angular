@@ -9,11 +9,12 @@ import { ProductsComponent } from "./products/products.component";
 import { ProductDetailComponent } from "./products/product-detail/product-detail.component";
 import { CategoriesComponent } from "./categories/categories.component";
 import { OrderDetailComponent } from "./orders/order-detail/order-detail.component";
+import { AuthGuard } from "./auth/auth.guard";
 
 const routes: Routes = [
     {path: 'admin', pathMatch: 'full', redirectTo: 'admin/dashboard'},
     {
-        path: 'admin', component: AdminComponent, children: [
+        path: 'admin', component: AdminComponent, canActivate: [AuthGuard],  children: [
             {path: 'dashboard', component: DashboardComponent},
             {path: 'categories', component: CategoriesComponent},
             {path: 'products', component: ProductsComponent},
