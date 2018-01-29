@@ -1,10 +1,10 @@
 <div class="container">
 
-    <div>
-        карта пуста
-    </div>
+    <!--<div *ngIf="isEmptyCart">-->
+    <!--карта пуста-->
+    <!--</div>-->
 
-    <table id="cart" class="table table-hover table-condensed" *ngIf="!isEmptyCart">
+    <table id="cart" class="table table-hover table-condensed">
         <thead>
         <tr>
             <th style="width:50%">Product</th>
@@ -51,8 +51,10 @@
                 Continue Shopping</a></td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong>Total {{ total }}</strong></td>
-            <td><a class="btn btn-success btn-block" (click)="goToCheckout()">Checkout <i
-                    class="fa fa-angle-right"></i></a></td>
+            <td>
+                <button class="btn btn-success btn-block" (click)="goToCheckout()">Checkout <i
+                        class="fa fa-angle-right"></i></button>
+            </td>
         </tr>
         </tfoot>
     </table>

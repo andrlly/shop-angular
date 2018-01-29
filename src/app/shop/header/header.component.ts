@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { AuthService } from "../../admin/auth/auth.service";
 import { StorageService } from "../../shared/services/storage.service";
+import { User } from "../../shared/models/user.model";
 
 @Component({
     selector: 'app-header',
@@ -12,6 +13,7 @@ export class HeaderComponent implements OnInit {
 
     isLoggedIn = this.authService.isLoggedIn();
     productsCount: number;
+    user_name: string;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -20,6 +22,10 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.authService.getUser(JSON.parse(localStorage.getItem('user')))
+            .subscribe((user: User) => {
+                this.user_name = user['user'].name;
+            });
 
         this.storageService.cartCount.subscribe(count => {
             this.productsCount = count;

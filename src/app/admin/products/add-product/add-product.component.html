@@ -1,13 +1,20 @@
 <form [formGroup]="apForm" (ngSubmit)="addProductSubmit()">
     <div class="form-group">
         <input type="text" class="form-control" name="name" formControlName="name" placeholder="Product name">
-        <p class="alert-danger" *ngIf="apForm.get('name').invalid && apForm.get('name').touched ">name is empty!</p>
+        <div class="alert alert-danger" role="alert" *ngIf="apForm.get('name').invalid && apForm.get('name').touched">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Name is empty!
+        </div>
     </div>
     <div class="form-group">
         <textarea type="text" class="form-control" cols="3" name="description" formControlName="description"
                   placeholder="Description"></textarea>
-        <p class="alert-danger" *ngIf="apForm.get('description').invalid && apForm.get('description').touched ">
-            description is empty!</p>
+        <div class="alert alert-danger" role="alert" *ngIf="apForm.get('description').invalid && apForm.get('description').touched">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Description is empty!
+        </div>
     </div>
     <div class="form-group">
         <label for="category_id">Category</label>
@@ -18,8 +25,13 @@
     <div class="form-group">
         <label for="price">Price</label>
         <input id="price" name="price" type="number" formControlName="price" min="0"/>
-        <p class="alert-danger" *ngIf="apForm.get('price').invalid && apForm.get('price').touched ">price is empty!</p>
     </div>
+    <div class="alert alert-danger" role="alert" *ngIf="apForm.get('price').invalid && apForm.get('price').touched">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Price is empty!
+    </div>
+
     <div class="form-group">
         <label for="image">Image</label>
         <input type="file" id="image" (change)="onFileChange($event)" #fileInput>

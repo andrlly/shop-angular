@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
+import { NgFlashMessageService, NgFlashMessagesModule } from "ng-flash-messages";
 
 import { Product } from "../../../shared/models/product.model";
 import { ProductsService } from "../../../shared/services/products.service";
@@ -34,9 +35,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
+                private ngFlashMessageService: NgFlashMessageService,
                 private productsService: ProductsService,
                 private categoriesService: CategoriesService,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,) {
         this.createForm();
     }
 
@@ -79,8 +81,14 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         const body = this.epForm.value;
         this.s3 = this.productsService.editProduct(this.id, body)
             .subscribe((product: Product) => {
-                console.log(product);
-                console.log('product edited!');
+                if (product) {
+                    this.ngFlashMessageService.showFlashMessage({
+                        messages: ["Product edited!"],
+                        dismissible: true,
+                        timeout: 3000,
+                        type: 'success'
+                    });
+                }
             });
     }
 

@@ -8,6 +8,8 @@ import { User } from "../../shared/models/user.model";
 @Injectable()
 export class AuthService {
 
+    user_id: number;
+
     constructor(private apiService: ApiService) {
     }
 
@@ -34,11 +36,12 @@ export class AuthService {
         return this.apiService.post('user' + route, credentials)
             .map(user => {
                 localStorage.setItem('user', JSON.stringify(user.user_id));
+                this.user_id = user.user_id;
                 return user.user_id;
             });
     }
 
-    getUserById(id) {
+    getUser(id) {
         return this.apiService.get(`user/${id}`);
     }
 

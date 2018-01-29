@@ -2,8 +2,11 @@
 <form [formGroup]="addCatFrom" (ngSubmit)="addProductSubmit()">
     <div class="form-group">
         <input type="text" class="form-control" name="name" formControlName="name" placeholder="Category name">
-        <p class="alert-danger" *ngIf="addCatFrom.get('name').invalid && addCatFrom.get('name').touched ">name is
-            empty!</p>
+        <div class="alert alert-danger" role="alert" *ngIf="addCatFrom.get('name').invalid && addCatFrom.get('name').touched">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Category name is empty!
+        </div>
     </div>
     <button type="submit" [disabled]="addCatFrom.invalid" class="btn btn-primary">Add</button>
 </form>

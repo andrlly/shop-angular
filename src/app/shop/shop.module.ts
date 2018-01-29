@@ -14,6 +14,7 @@ import { CartComponent } from './cart/cart.component';
 import { StorageService } from "../shared/services/storage.service";
 import { CartResolver } from "./cart/cart.resolve";
 import { CheckoutComponent } from './cart/checkout/checkout.component';
+import { NgFlashMessagesModule } from "ng-flash-messages";
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { CheckoutComponent } from './cart/checkout/checkout.component';
         ShopRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpModule
+        HttpModule,
+        NgFlashMessagesModule
     ],
     providers: [HomeService, StorageService, CartResolver],
 })

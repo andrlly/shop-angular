@@ -47,7 +47,7 @@ export class StorageService {
 
     removeProduct(id: number) {
         const cart = JSON.parse(this.cart);
-        const updatedCart = cart.filter(c => +c.id !== id);
+        const updatedCart = cart.filter(c => +c.id !== +id);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
 

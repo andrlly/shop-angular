@@ -4,6 +4,7 @@ import { Subscription } from "rxjs/Subscription";
 import { Product } from "../../../shared/models/product.model";
 import { ProductsService } from "../../../shared/services/products.service";
 import { StorageService } from "../../../shared/services/storage.service";
+import { NgFlashMessageService } from "ng-flash-messages";
 
 @Component({
   selector: 'app-product-detail',
@@ -25,7 +26,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   constructor(
       private route: ActivatedRoute,
       private productsService: ProductsService,
-      private storage: StorageService
+      private storage: StorageService,
+      private ngFlashMessageService: NgFlashMessageService
   ) { }
 
   ngOnInit() {
@@ -42,6 +44,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   addToCartProduct() {
       this.storage.saveDataToLocalStorage(this.id, this.price);
+      this.ngFlashMessageService.showFlashMessage({
+          messages: [`Product "${this.name}" added to cart!`],
+          dismissible: true,
+          timeout: 3000,
+          type: 'success'
+      });
   }
 
 

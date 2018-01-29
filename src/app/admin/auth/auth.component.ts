@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgFlashMessageService } from "ng-flash-messages";
+
 import { AuthService } from "./auth.service";
 
 @Component({
@@ -17,7 +18,8 @@ export class AuthComponent implements OnInit {
 
     constructor(private authService: AuthService,
                 private router: Router,
-                private route: ActivatedRoute,) {
+                private route: ActivatedRoute,
+                private ngFlashMessageService: NgFlashMessageService) {
     }
 
     ngOnInit() {
@@ -42,7 +44,12 @@ export class AuthComponent implements OnInit {
                 if (user) {
                     this.router.navigate(['/admin']);
                 } else {
-                    console.log('Something went wrong!');
+                    this.ngFlashMessageService.showFlashMessage({
+                        messages: ["Wrong username or password."],
+                        dismissible: true,
+                        timeout: 3000,
+                        type: 'danger'
+                    });
                 }
             });
     }

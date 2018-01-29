@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from "@angular/forms";
+import { NgFlashMessagesModule } from "ng-flash-messages";
 
 import { AppComponent } from './app.component';
 import { ShopModule } from './shop/shop.module';
@@ -29,6 +30,7 @@ const routes: Routes = [
         ShopModule,
         AdminModule,
         RouterModule.forRoot(routes),
+        NgFlashMessagesModule
     ],
     providers: [ApiService, AuthGuard, ProductsService, CategoriesService, OrdersService],
     bootstrap: [AppComponent]

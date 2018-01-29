@@ -9,9 +9,6 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/products']">Products</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/categories']">Categories</a>
-            </li>
         </ul>
 
         <ul class="navbar-nav float-right">
@@ -21,7 +18,7 @@
                     productsCount }} | </strong> Cart</a>
             </li>
             <li class="nav-item">
-                <a *ngIf="isLoggedIn" class="nav-link" [routerLink]="['/admin']">Admin</a>
+                <a *ngIf="isLoggedIn" class="nav-link" [routerLink]="['/admin']">Hello, {{ user_name }}</a>
             </li>
             <li class="nav-item">
                 <a *ngIf="!isLoggedIn" class="nav-link" [routerLink]="['/login']">Log in</a>

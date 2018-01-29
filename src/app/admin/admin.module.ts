@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgFlashMessagesModule } from "ng-flash-messages";
 
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -21,7 +22,8 @@ import { OrderDetailComponent } from './orders/order-detail/order-detail.compone
         CommonModule,
         AdminRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgFlashMessagesModule
     ],
     declarations: [
         AdminHeaderComponent,

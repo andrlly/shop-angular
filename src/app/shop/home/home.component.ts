@@ -16,8 +16,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.updated_at);
-
         this.homeService.getConfigs()
             .subscribe((config: Home) => {
                 this.body = config[0].body;
