@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { NgFlashMessagesModule } from "ng-flash-messages";
 
@@ -26,11 +27,12 @@ const routes: Routes = [
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         FormsModule,
         ShopModule,
         AdminModule,
+        NgFlashMessagesModule,
         RouterModule.forRoot(routes),
-        NgFlashMessagesModule
     ],
     providers: [ApiService, AuthGuard, ProductsService, CategoriesService, OrdersService],
     bootstrap: [AppComponent]

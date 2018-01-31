@@ -15,7 +15,7 @@ export class OrdersService {
     }
 
     getOrderById(id): Observable<Order[]> {
-        return this.api.get(`orders/${id}`)
+        return this.api.get(`order/${id}`)
     }
 
     addOrder(body): Observable<Order[]> {

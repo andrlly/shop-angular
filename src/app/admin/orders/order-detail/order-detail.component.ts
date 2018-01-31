@@ -15,10 +15,9 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     user_name: string;
     user_email: string;
     user_comment: string;
-    product_price: number;
-    product_count: number;
-    product_name: string;
+    products = [];
 
+    quantity: number;
     order_date: string;
 
     s1: Subscription;
@@ -34,14 +33,20 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
             .subscribe((order: Order[]) => {
                 this.user_name = order['user'].name;
                 this.user_email = order['user'].email;
-                this.user_comment = order['user'].comment;
-
-                this.product_name = order['product'].product_name;
-                this.product_price = order['product'].product_price;
-                this.product_count = order['product'].product_count;
-
+                // this.user_comment = order['user'].comment;
+                //
+                this.products = order['products'];
+                this.quantity = order['quantity'];
+                console.log(order['quantity']);
+                //
                 this.order_date = order['created_at'];
             })
+    }
+
+    get total() {
+        return this.products.reduce((prev, next) => {
+            return prev + (next.quantity * next.price);
+        }, 0);
     }
 
     ngOnDestroy() {

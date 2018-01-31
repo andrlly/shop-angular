@@ -26,10 +26,12 @@ export class HeaderComponent implements OnInit {
             .subscribe((user: User) => {
                 this.user_name = user['user'].name;
             });
-
-        this.storageService.cartCount.subscribe(count => {
-            this.productsCount = count;
-        })
+        // if (JSON.parse(localStorage.getItem('cart'))) {
+            this.storageService.cartCount.subscribe(count => {
+                console.log(count);
+                this.productsCount = count;
+            });
+        // }
     }
 
     onLogout() {

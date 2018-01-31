@@ -15,6 +15,7 @@ import { StorageService } from "../shared/services/storage.service";
 import { CartResolver } from "./cart/cart.resolve";
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { NgFlashMessagesModule } from "ng-flash-messages";
+import { ThanksComponent } from './cart/checkout/thanks/thanks.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { NgFlashMessagesModule } from "ng-flash-messages";
         HeaderComponent,
         ProductDetailComponent,
         CartComponent,
-        CheckoutComponent
+        CheckoutComponent,
+        ThanksComponent
     ],
     imports: [
         CommonModule,

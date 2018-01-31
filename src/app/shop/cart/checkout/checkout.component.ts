@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Data } from "@angular/router";
+import { ActivatedRoute, Data, Router } from "@angular/router";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgFlashMessageService } from "ng-flash-messages";
+
 import { OrdersService } from "../../../shared/services/order.service";
 import { AuthService } from "../../../admin/auth/auth.service";
 
@@ -18,13 +20,13 @@ export class CheckoutComponent implements OnInit {
     checkForm: FormGroup;
 
 
-    constructor(private route: ActivatedRoute,
+    constructor(private router: Router,
                 private ordersService: OrdersService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private ngFlashMessageService: NgFlashMessageService) {
     }
 
     ngOnInit() {
-
         this.productsCheck = this.checkout;
         this.createForm();
     }
@@ -56,22 +58,43 @@ export class CheckoutComponent implements OnInit {
     }
 
     submitForm() {
+
         const product_data = {
-            "products": JSON.stringify(this.productsCheck),
+            "data": this.productsCheck,
             "user_id": this.isLoggedIn,
-            "price": 900,
-            "count": 3
         };
         if (!this.isLoggedIn) {
             const credentials = this.checkForm.value;
             this.authService.attemptAuth("register", credentials)
                 .subscribe(res => {
                     product_data.user_id = +res;
-                    this.ordersService.addOrder(product_data).subscribe(order => console.log("order", order));
+                    this.ordersService.addOrder(product_data)
+                        .subscribe(order =>  {
+                            this.ngFlashMessageService.showFlashMessage({
+                                messages: [`Thanks you for order`],
+                                dismissible: true,
+                                timeout: 3000,
+                                type: 'success'
+                            });
+                            setTimeout(() => {
+                                this.router.navigate(['/thanks']);
+                            }, 3500);
+                        });
                 });
         } else {
-            console.log(product_data);
-            this.ordersService.addOrder(product_data).subscribe(order => console.log("order", order));
+            this.ordersService.addOrder(product_data)
+                .subscribe(order => {
+                    this.ngFlashMessageService.showFlashMessage({
+                        messages: [`Thanks you for order`],
+                        dismissible: true,
+                        timeout: 3000,
+                        type: 'success'
+                    });
+                    setTimeout(() => {
+                        this.router.navigate(['/thanks']);
+                    }, 3500);
+
+                });
         }
     }
 

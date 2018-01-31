@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class ApiService {
@@ -9,15 +9,15 @@ export class ApiService {
     private baseUrl = 'http://ukiegoods.loc/';
     // private baseUrl = 'http://news.hbmdev.com/';
 
-    constructor(public http: Http) {
+    constructor(private http: HttpClient) {
     }
 
-    private setHeaders(): Headers {
+    private setHeaders(): HttpHeaders {
         const headersConfig = {
             'Content-Type': 'application/json, multipart/form-data',
             'Accept': 'application/json'
         };
-        return new Headers(headersConfig);
+        return new HttpHeaders(headersConfig);
     }
 
     private getUrl(url: string = ''): string {
@@ -25,18 +25,15 @@ export class ApiService {
     }
 
     public get(url: string = ''): Observable<any> {
-        return this.http.get(this.getUrl(url))
-            .map((response: Response) => response.json());
+        return this.http.get(this.getUrl(url));
     }
 
     public post(url: string = '', body: Object = {}): Observable<any> {
-        return this.http.post(this.getUrl(url), JSON.stringify(body), {headers: this.setHeaders()})
-            .map((response: Response) => response.json());
+        return this.http.post(this.getUrl(url), JSON.stringify(body), {headers: this.setHeaders()});
     }
 
     public put(url: string = '', body: Object = {}): Observable<any> {
-        return this.http.put(this.getUrl(url), JSON.stringify(body), {headers: this.setHeaders()})
-            .map((response: Response) => response.json());
+        return this.http.put(this.getUrl(url), JSON.stringify(body), {headers: this.setHeaders()});
     }
 
 }

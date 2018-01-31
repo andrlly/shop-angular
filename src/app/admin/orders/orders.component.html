@@ -4,7 +4,8 @@
 
 <ul class="list-group">
     <li class="list-group-item" *ngFor="let order of orders">
+        <!--{{ order|json }}-->
         <span class="badge">{{ order.id }}</span>
-        <a [routerLink]="['/admin/order/', order.id]">{{ order.user.name }} | {{ order.product.name }}</a>
+        <a [routerLink]="['/admin/order/', order.id]">{{ order.user.name }}</a>
     </li>
 </ul>

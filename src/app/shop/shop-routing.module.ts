@@ -7,6 +7,7 @@ import { ProductDetailComponent } from "./products/product-detail/product-detail
 import { CartComponent } from "./cart/cart.component";
 import { CartResolver } from "./cart/cart.resolve";
 import { CheckoutComponent } from "./cart/checkout/checkout.component";
+import { ThanksComponent } from "./cart/checkout/thanks/thanks.component";
 
 const routes: Routes = [
     {
@@ -14,6 +15,7 @@ const routes: Routes = [
             {path: '', component: HomeComponent},
             {path: 'cart', component: CartComponent, resolve: {products: CartResolver}},
             {path: 'checkout', component: CheckoutComponent, resolve: {products: CartResolver}},
+            {path: 'thanks', component: ThanksComponent},
             {path: 'products', component: ProductsComponent},
             {path: 'products/:id', component: ProductDetailComponent}
         ]

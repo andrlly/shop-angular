@@ -1,18 +1,11 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <div class="invoice-title">
-        <h2>Invoice</h2><h3 class="pull-right">Order # {{ id }}</h3>
-      </div>
+
       <hr>
       <div class="row">
-        <div class="col-xs-12 text-right">
-          <address>
-            <strong>Address:</strong><br>
-            {{ user_name }}<br>
-            {{ user_email }}<br>
-            {{ user_comment }}<br>
-          </address>
+        <div class="col-xs-12 text-center">
+          <h1>Your Order</h1>
         </div>
       </div>
       <div class="row">
@@ -45,11 +38,11 @@
               </thead>
               <tbody>
               <!-- foreach ($order->lineItems as $line) or some such thing here -->
-              <tr *ngFor="let products of products">
-                <td>{{ products.name }}</td>
-                <td class="text-center">{{ products.price }}</td>
-                <td class="text-center">{{ quantity }}</td>
-                <td class="text-right">{{ products.price * quantity }}</td>
+              <tr *ngFor="let product of info">
+                <td>{{ product.name }}</td>
+                <td class="text-center">{{ product.price }}</td>
+                <td class="text-center">{{ product.count }}</td>
+                <td class="text-right">{{ product.price * product.count }}</td>
               </tr>
 
 
